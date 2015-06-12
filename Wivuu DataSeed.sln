@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.DataSeed", "Wivuu.DataSeed\Wivuu.DataSeed.csproj", "{B00A2203-7ADE-4915-9BD9-5CF79E894D44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.DataSeed.Tests", "Wivuu.DataSeed.Tests\Wivuu.DataSeed.Tests.csproj", "{1971061F-199D-4559-93B2-FC36A3036DF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1971061F-199D-4559-93B2-FC36A3036DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1971061F-199D-4559-93B2-FC36A3036DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1971061F-199D-4559-93B2-FC36A3036DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1971061F-199D-4559-93B2-FC36A3036DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
