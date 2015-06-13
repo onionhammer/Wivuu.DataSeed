@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity.Migrations;
+using System.Data.SqlClient;
 using Autofac;
 using Wivuu.DataSeed;
 
@@ -17,21 +16,23 @@ namespace System.Data.Entity.Migrations
             var builder    = new ContainerBuilder();
             var configType = config.GetType();
 
-            builder.RegisterInstance(context).As<T>();
             builder.RegisterAssemblyTypes(configType.Assembly)
                 .Where(t => t.BaseType == typeof(DataMigration<T>))
-                .As<DataMigration<T>>();
+                .As<DataMigration<T>>().PropertiesAutowired();
 
-            var container = builder.Build();
-            var migrations = container.Resolve<IEnumerable<DataMigration<T>>>();
+            builder.RegisterAssemblyTypes(configType.Assembly)
+                .Where(t => t.BaseType == typeof(DbMigrationsConfiguration<T>))
+                .As<DbMigrationsConfiguration<T>>();
 
-            //if (System.Diagnostics.Debugger.IsAttached == false)
-            //    System.Diagnostics.Debugger.Launch();
-
-            foreach (var migration in migrations)
+            using (var container = builder.Build())
             {
-                if (migration.AlreadyApplied(context) == false)
-                    migration.Apply(context);
+                var migrations = container.Resolve<IEnumerable<DataMigration<T>>>();
+
+                foreach (var migration in migrations)
+                {
+                    if (migration.AlreadyApplied(context) == false || migration.AlwaysRun)
+                        migration.Apply(context);
+                }
             }
         }
     }
@@ -42,16 +43,98 @@ namespace Wivuu.DataSeed
     public abstract class DataMigration<T>
         where T : DbContext
     {
-        public bool AlreadyApplied(T context)
+        public DbMigrationsConfiguration<T> Configuration { get; set; }
+
+        protected bool AlreadyRunResult { get; set; }
+
+        private string MigrationId
         {
+            get { return this.GetType().Name.ToLower(); }
+        }
+
+        private string ContextKey
+        {
+            get { return Configuration.GetType().FullName; }
+        }
+
+        public virtual bool AlwaysRun
+        {
+            get { return false; }
+        }
+
+        public virtual bool AlreadyApplied(T context)
+        {
+            // Check history
+            var query = context.Database.SqlQuery(
+                typeof(DataMigrationHistory), @"
+                SELECT TOP 1 MigrationId, ContextKey
+                FROM dbo.__DataMigrationHistory
+                WHERE MigrationId = @migrationId AND
+                      ContextKey = @contextKey",
+                new SqlParameter("@migrationId", this.MigrationId),
+                new SqlParameter("@contextKey", this.ContextKey));
+
+            var results = query.ToListAsync().Result;
+
+            foreach (var result in results)
+            {
+                // Perform cleanup
+                Cleanup(context);
+                AlreadyRunResult = true;
+                return true;
+            }
+
+            AlreadyRunResult = false;
             return false;
+        }
+
+        public virtual void Cleanup(T context)
+        {
+            /* Implemented as-needed */
         }
 
         public void Apply(T context)
         {
             Execute(context);
+
+            // Append migration history, if this was not run previously
+            if (AlreadyRunResult == false)
+                context.Database.ExecuteSqlCommand(
+                    "INSERT INTO dbo.__DataMigrationHistory VALUES (@migrationid, @contextKey)",
+                    new SqlParameter("@migrationId", this.MigrationId),
+                    new SqlParameter("@contextKey", this.ContextKey)
+                );
         }
 
         protected abstract void Execute(T context);
+    }
+
+    public class DataMigrationHistory
+    {
+        public string MigrationId { get; set; }
+
+        public string ContextKey { get; set; }
+    }
+
+    public class InitialDataMigration : DbMigration
+    {
+        public override void Up()
+        {
+            CreateTable(
+                "dbo.__DataMigrationHistory",
+                c => new
+                    {
+                        MigrationId = c.String(nullable: false, maxLength: 150),
+                        ContextKey  = c.String(nullable: false)
+                    })
+                .Index(c => c.MigrationId)
+                .PrimaryKey(c => c.MigrationId);
+        }
+
+        public override void Down()
+        {
+            DropIndex("dbo.__DataMigrationHistory", new[] { "MigrationId" });
+            DropTable("dbo.__DataMigrationHistory");
+        }
     }
 }

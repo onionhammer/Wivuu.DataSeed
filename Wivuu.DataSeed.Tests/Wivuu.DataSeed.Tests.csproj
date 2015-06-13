@@ -68,9 +68,14 @@
     <Compile Include="Migrations\201506112304197_first.Designer.cs">
       <DependentUpon>201506112304197_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506131619104_datamigration.cs" />
+    <Compile Include="Migrations\201506131619104_datamigration.Designer.cs">
+      <DependentUpon>201506131619104_datamigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DatabaseTests.cs" />
+    <Compile Include="Base\DatabaseTests.cs" />
+    <Compile Include="TestDataModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -85,6 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201506112304197_first.resx">
       <DependentUpon>201506112304197_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506131619104_datamigration.resx">
+      <DependentUpon>201506131619104_datamigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

@@ -14,7 +14,7 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             // Add "Summer Heights High" school
             var school = new School
             {
-                Id = Guid.NewGuid(),
+                Id   = Guid.NewGuid(),
                 Name = "Summer Heights High"
             };
 
@@ -23,7 +23,9 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             // Add students
             school.Students.Add(new Student
             {
-                Id = Guid.NewGuid()
+                Id        = Guid.NewGuid(),
+                FirstName = "Jamie",
+                LastName  = "Johnson"
             });
         }
     }
