@@ -9,7 +9,7 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
 {
     public class AddSchools : DataMigration<DataSeedTestContext>
     {
-        protected override void Execute(DataSeedTestContext context)
+        protected override void Apply(DataSeedTestContext context)
         {
             // Add "Summer Heights High" school
             var school = new School

@@ -31,7 +31,7 @@ namespace System.Data.Entity.Migrations
                 foreach (var migration in migrations)
                 {
                     if (migration.AlreadyApplied(context) == false || migration.AlwaysRun)
-                        migration.Apply(context);
+                        migration.ApplyInternal(context);
                 }
             }
         }
@@ -93,9 +93,9 @@ namespace Wivuu.DataSeed
             /* Implemented as-needed */
         }
 
-        public void Apply(T context)
+        internal void ApplyInternal(T context)
         {
-            Execute(context);
+            Apply(context);
 
             // Append migration history, if this was not run previously
             if (AlreadyRunResult == false)
@@ -106,7 +106,7 @@ namespace Wivuu.DataSeed
                 );
         }
 
-        protected abstract void Execute(T context);
+        protected abstract void Apply(T context);
     }
 
     public class DataMigrationHistory
