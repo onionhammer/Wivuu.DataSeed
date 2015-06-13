@@ -20,6 +20,7 @@ namespace Wivuu.DataSeed.Tests
             var all = Db.Students.ToList();
 
             Assert.IsNotNull(all);
+            Assert.AreEqual(1, all.Count);
         }
     }
 }
