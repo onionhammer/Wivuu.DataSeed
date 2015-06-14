@@ -12,7 +12,7 @@ namespace Wivuu.DataSeed.Tests.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                         School_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -24,8 +24,8 @@ namespace Wivuu.DataSeed.Tests.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        FirstName = c.String(),
-                        LastName = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
                         School_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -37,7 +37,7 @@ namespace Wivuu.DataSeed.Tests.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

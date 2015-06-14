@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Linq;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
@@ -13,25 +13,41 @@ namespace System.Data.Entity.Migrations
         public static void Execute<T>(this DbMigrationsConfiguration<T> config, T context)
             where T : DbContext
         {
-            var builder    = new ContainerBuilder();
-            var configType = config.GetType();
-
-            builder.RegisterAssemblyTypes(configType.Assembly)
-                .Where(t => t.BaseType == typeof(DataMigration<T>))
-                .As<DataMigration<T>>().PropertiesAutowired();
-
-            builder.RegisterAssemblyTypes(configType.Assembly)
-                .Where(t => t.BaseType == typeof(DbMigrationsConfiguration<T>))
-                .As<DbMigrationsConfiguration<T>>();
-
-            using (var container = builder.Build())
+            using (var transaction = context.Database.BeginTransaction())
             {
-                var migrations = container.Resolve<IEnumerable<DataMigration<T>>>();
-
-                foreach (var migration in migrations)
+                try
                 {
-                    if (migration.AlreadyApplied(context) == false || migration.AlwaysRun)
-                        migration.ApplyInternal(context);
+                    var builder    = new ContainerBuilder();
+                    var configType = config.GetType();
+
+                    builder.RegisterAssemblyTypes(configType.Assembly)
+                        .Where(t => t.BaseType == typeof(DataMigration<T>))
+                        .As<DataMigration<T>>().PropertiesAutowired();
+
+                    builder.RegisterAssemblyTypes(configType.Assembly)
+                        .Where(t => t.BaseType == typeof(DbMigrationsConfiguration<T>))
+                        .As<DbMigrationsConfiguration<T>>();
+
+                    using (var container = builder.Build())
+                    {
+                        var migrations = from migration in container.Resolve<IEnumerable<DataMigration<T>>>()
+                                         orderby migration.Order
+                                         select migration;
+
+                        foreach (var migration in migrations)
+                        {
+                            if (migration.AlreadyApplied(context) == false || migration.AlwaysRun)
+                                migration.ApplyInternal(context);
+                        }
+                    }
+
+                    context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
                 }
             }
         }
@@ -47,14 +63,16 @@ namespace Wivuu.DataSeed
 
         protected bool AlreadyRunResult { get; set; }
 
-        private string MigrationId
-        {
-            get { return this.GetType().Name.ToLower(); }
-        }
+        public abstract int Order { get; }
 
         private string ContextKey
         {
             get { return Configuration.GetType().FullName; }
+        }
+
+        private string MigrationId
+        {
+            get { return this.GetType().Name.ToLower(); }
         }
 
         public virtual bool AlwaysRun
@@ -64,7 +82,7 @@ namespace Wivuu.DataSeed
 
         public virtual bool AlreadyApplied(T context)
         {
-            // Check history
+            // Construct query to check for existing migrations
             var query = context.Database.SqlQuery(
                 typeof(DataMigrationHistory), @"
                 SELECT TOP 1 MigrationId, ContextKey
@@ -74,6 +92,7 @@ namespace Wivuu.DataSeed
                 new SqlParameter("@migrationId", this.MigrationId),
                 new SqlParameter("@contextKey", this.ContextKey));
 
+            // Execute query
             var results = query.ToListAsync().Result;
 
             foreach (var result in results)
@@ -97,10 +116,11 @@ namespace Wivuu.DataSeed
         {
             Apply(context);
 
-            // Append migration history, if this was not run previously
             if (AlreadyRunResult == false)
-                context.Database.ExecuteSqlCommand(
-                    "INSERT INTO dbo.__DataMigrationHistory VALUES (@migrationid, @contextKey)",
+                // Append migration history, if this was not run previously
+                context.Database.ExecuteSqlCommand(@"
+                    INSERT INTO dbo.__DataMigrationHistory 
+                    VALUES (@migrationid, @contextKey)",
                     new SqlParameter("@migrationId", this.MigrationId),
                     new SqlParameter("@contextKey", this.ContextKey)
                 );

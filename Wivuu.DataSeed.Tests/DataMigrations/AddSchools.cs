@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wivuu.DataSeed.Tests.Domain;
 
 namespace Wivuu.DataSeed.Tests.DataMigrations
@@ -27,6 +23,11 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 FirstName = "Jamie",
                 LastName  = "Johnson"
             });
+        }
+
+        public override int Order
+        {
+            get { return 0; }
         }
     }
 }

@@ -59,18 +59,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DataMigrations\AddClasses.cs" />
     <Compile Include="DataMigrations\AddSchools.cs" />
     <Compile Include="Domain\Class.cs" />
     <Compile Include="Domain\DataSeedTestContext.cs" />
     <Compile Include="Domain\School.cs" />
     <Compile Include="Domain\Student.cs" />
-    <Compile Include="Migrations\201506112304197_first.cs" />
-    <Compile Include="Migrations\201506112304197_first.Designer.cs">
-      <DependentUpon>201506112304197_first.cs</DependentUpon>
+    <Compile Include="Migrations\201506132356208_first.cs" />
+    <Compile Include="Migrations\201506132356208_first.Designer.cs">
+      <DependentUpon>201506132356208_first.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201506131619104_datamigration.cs" />
-    <Compile Include="Migrations\201506131619104_datamigration.Designer.cs">
-      <DependentUpon>201506131619104_datamigration.cs</DependentUpon>
+    <Compile Include="Migrations\201506132356482_database.cs" />
+    <Compile Include="Migrations\201506132356482_database.Designer.cs">
+      <DependentUpon>201506132356482_database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,11 +89,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201506112304197_first.resx">
-      <DependentUpon>201506112304197_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201506132356208_first.resx">
+      <DependentUpon>201506132356208_first.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201506131619104_datamigration.resx">
-      <DependentUpon>201506131619104_datamigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201506132356482_database.resx">
+      <DependentUpon>201506132356482_database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

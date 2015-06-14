@@ -19,6 +19,12 @@ namespace Wivuu.DataSeed.Tests.Domain
                     .MapLeftKey("Student_Id")
                     .MapRightKey("Class_Id")
                     .ToTable("Student_Class"));
+
+            // Ensure Names are not-null
+            modelBuilder.Entity<School>().Property(s => s.Name).IsRequired();
+            modelBuilder.Entity<Student>().Property(s => s.FirstName).IsRequired();
+            modelBuilder.Entity<Student>().Property(s => s.LastName).IsRequired();
+            modelBuilder.Entity<Class>().Property(p => p.Name).IsRequired();
         }
 
         public DbSet<School> Schools { get; set; }
