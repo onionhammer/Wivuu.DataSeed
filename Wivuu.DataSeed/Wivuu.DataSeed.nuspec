@@ -20,6 +20,6 @@
     <file src="Packaging\tools\*.psm1" target="tools" />
     
     <!-- Templates -->
-    <file src="Packaging\source\*.cs" target="content" />
+    <file src="Packaging\source\*.pp" target="content\Migrations" />
   </files>
 </package>
