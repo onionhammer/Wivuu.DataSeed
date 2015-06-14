@@ -14,7 +14,8 @@
     <tags>EntityFramework data model</tags>
   </metadata>
   <files>
-    <file src="Packaging\tools\*.ps1" target="tools\" />
-    <file src="Packaging\tools\*.psm1" target="tools\" />
+    <file src="Packaging\tools\*.ps1" target="tools" />
+    <file src="Packaging\tools\*.psd1" target="tools" />
+    <file src="Packaging\tools\*.psm1" target="tools" />
   </files>
 </package>

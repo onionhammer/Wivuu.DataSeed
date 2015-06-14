@@ -73,6 +73,7 @@
     <None Include="App.config" />
     <None Include="Packaging\NuGet.targets" />
     <None Include="packages.config" />
+    <None Include="Packaging\tools\DataSeed.psm1" />
     <None Include="Packaging\tools\init.ps1" />
     <None Include="Wivuu.DataSeed.nuspec" />
   </ItemGroup>
