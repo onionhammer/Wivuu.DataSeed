@@ -11,7 +11,7 @@
 
 #>
 function Enable-Data-Migrations() {
-	Write-Host "Enabling data-migrations"
+	Write-Host "Enabling data-migrations..."
 	Add-Migration "dataseed-migration"
 }
 
@@ -21,7 +21,7 @@ function Add-Data-Migration() {
         [string] $Name
 	)
 
-	Write-Host "Adding data-migration", $Name
+	Write-Host "Adding data-migration", $Name, "..."
 }
 
 Export-ModuleMember Enable-Data-Migrations, Add-Data-Migration
