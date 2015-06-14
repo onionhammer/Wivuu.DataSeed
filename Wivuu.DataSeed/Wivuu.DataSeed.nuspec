@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0</version>
+    <title>$title$</title>
+    <authors>Erik O'Leary</authors>
+    <owners>Erik O'Leary</owners>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Cummins Mobile API</description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>EntityFramework data model</tags>
+  </metadata>
+  <files>
+    <file src="Packaging\tools\*.ps1" target="tools\" />
+    <file src="Packaging\tools\*.psm1" target="tools\" />
+  </files>
+</package>

@@ -7,18 +7,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.DataSeed", "Wivuu.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.DataSeed.Tests", "Wivuu.DataSeed.Tests\Wivuu.DataSeed.Tests.csproj", "{1971061F-199D-4559-93B2-FC36A3036DF6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3AE24805-55C7-4895-B812-1EC0D60DD44F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Packaging|Any CPU = Packaging|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Packaging|Any CPU.ActiveCfg = Packaging|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Packaging|Any CPU.Build.0 = Packaging|Any CPU
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1971061F-199D-4559-93B2-FC36A3036DF6}.Packaging|Any CPU.ActiveCfg = Packaging|Any CPU
+		{1971061F-199D-4559-93B2-FC36A3036DF6}.Packaging|Any CPU.Build.0 = Packaging|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

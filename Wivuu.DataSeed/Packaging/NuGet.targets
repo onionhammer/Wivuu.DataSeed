@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NuGetPath>..\.nuget\NuGet.exe</NuGetPath>
+    <OutputDir>$(OutDir)</OutputDir>
+  </PropertyGroup>
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' != 'Packaging' ">
+    <Exec Command="$(NuGetPath) pack $(ProjectFileName) -OutputDirectory $(OutputDir) -Prop Configuration=Packaging -Build -IncludeReferencedProjects" />
+  </Target>
+</Project>
