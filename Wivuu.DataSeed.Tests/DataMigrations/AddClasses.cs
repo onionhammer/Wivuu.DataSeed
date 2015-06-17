@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Wivuu.DataSeed.Tests.Domain;
 
 namespace Wivuu.DataSeed.Tests.DataMigrations
@@ -19,6 +20,18 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 Id   = Guid.NewGuid(),
                 Name = "Physics 201"
             });
+        }
+
+        public override void Cleanup(DataSeedTestContext context)
+        {
+            // Remove classes
+            foreach (var course in context.Classes)
+                context.Classes.Remove(course);
+        }
+
+        public override bool AlwaysRun
+        {
+            get { return true; }
         }
 
         public override int Order

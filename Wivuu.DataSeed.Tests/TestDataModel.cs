@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Wivuu.DataSeed.Tests.Domain;
 
 namespace Wivuu.DataSeed.Tests
 {
@@ -21,6 +22,23 @@ namespace Wivuu.DataSeed.Tests
 
             Assert.IsNotNull(all);
             Assert.AreEqual(1, all.Count);
+        }
+
+        [TestMethod]
+        public async Task TestHasMigrations()
+        {
+            var query = Db.Database.SqlQuery<DataMigrationHistory>(
+                "SELECT MigrationId, ContextKey FROM dbo.__DataMigrationHistory");
+
+            var assembly = typeof(TestDataModel).Assembly;
+            var types = from type in assembly.DefinedTypes
+                        where type.BaseType == typeof(DataMigration<DataSeedTestContext>)
+                        select type;
+
+            var results       = await query.ToListAsync();
+            var numMigrations = types.Count();
+
+            Assert.AreEqual(numMigrations, results.Count);
         }
     }
 }
