@@ -8,7 +8,9 @@
     <owners>Erik O'Leary</owners>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Cummins Mobile API</description>
+    <description>
+      The purpose of DataSeed is to help you manage the data that gets pre-filled in your database when using EntityFramework's code-first model. DataSeed adds 'migration' rows to a __DataMigrations table to keep track of which data migrations have already been performed, similarly to how EntityFramework tracks schema changes.
+    </description>
     <releaseNotes>Initial Release</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>EntityFramework data model</tags>
