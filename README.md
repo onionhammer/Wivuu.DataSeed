@@ -1,5 +1,11 @@
 # Purpose
 
+The purpose of DataSeed is to help you manage the data that gets pre-filled
+in your database when using EntityFramework's code-first model. DataSeed adds
+'migration' rows to a __DataMigrations table to keep track of which data 
+migrations have already been performed, similarly to how EntityFramework tracks
+schema changes.
+
 # Usage
 
 Using DataSeed is simple, after installing the package to your code-first 
