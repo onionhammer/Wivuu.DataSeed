@@ -22,20 +22,13 @@ namespace Wivuu.DataSeed
 
         public virtual bool AlwaysRun => false;
 
-        private string AssemblyPath
-        {
-            get
-            {
-                var absolutePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
-                return Path.GetDirectoryName(absolutePath);
-            }
-        }
+        private string AssemblyPath => Path.GetDirectoryName(
+            new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
 
         public virtual bool AlreadyApplied(T context)
         {
             // Construct query to check for existing migrations
-            var query = context.Database.SqlQuery(
-                typeof(DataMigrationHistory), @"
+            var query = context.Database.SqlQuery<DataMigrationHistory>(@"
                 SELECT TOP 1 MigrationId, ContextKey
                 FROM dbo.__DataMigrationHistory
                 WHERE MigrationId = @migrationId AND
@@ -73,8 +66,7 @@ namespace Wivuu.DataSeed
                     INSERT INTO dbo.__DataMigrationHistory 
                     VALUES (@migrationid, @contextKey)",
                     new SqlParameter("@migrationId", this.MigrationId),
-                    new SqlParameter("@contextKey", this.ContextKey)
-                );
+                    new SqlParameter("@contextKey", this.ContextKey));
         }
 
         protected abstract void Apply(T context);

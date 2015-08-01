@@ -2,7 +2,7 @@
 
 namespace Wivuu.DataSeed
 {
-    public class DataMigrationHistory
+    internal class DataMigrationHistory
     {
         public string MigrationId { get; set; }
 
