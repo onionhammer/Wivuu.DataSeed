@@ -5,6 +5,8 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
 {
     public class AddSchools : DataMigration<DataSeedTestContext>
     {
+        public override int Order => 0;
+
         protected override void Apply(DataSeedTestContext context)
         {
             // Add "Summer Heights High" school
@@ -23,11 +25,6 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 FirstName = "Jamie",
                 LastName  = "Johnson"
             });
-        }
-
-        public override int Order
-        {
-            get { return 0; }
         }
     }
 }

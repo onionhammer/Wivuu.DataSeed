@@ -16,20 +16,11 @@ namespace Wivuu.DataSeed
 
         public abstract int Order { get; }
 
-        private string ContextKey
-        {
-            get { return Configuration.GetType().FullName; }
-        }
+        private string ContextKey => Configuration.GetType().FullName;
 
-        private string MigrationId
-        {
-            get { return this.GetType().Name.ToLower(); }
-        }
+        private string MigrationId => this.GetType().Name.ToLower();
 
-        public virtual bool AlwaysRun
-        {
-            get { return false; }
-        }
+        public virtual bool AlwaysRun => false;
 
         private string AssemblyPath
         {

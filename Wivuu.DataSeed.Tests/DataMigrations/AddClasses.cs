@@ -8,6 +8,10 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
     {
         private Random Random { get; } = new Random(0x1);
 
+        public override bool AlwaysRun => true;
+
+        public override int Order => 1;
+
         protected override void Apply(DataSeedTestContext context)
         {
             // Add classes
@@ -29,16 +33,6 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             // Remove classes
             foreach (var course in context.Classes)
                 context.Classes.Remove(course);
-        }
-
-        public override bool AlwaysRun
-        {
-            get { return true; }
-        }
-
-        public override int Order
-        {
-            get { return 1; }
         }
     }
 }

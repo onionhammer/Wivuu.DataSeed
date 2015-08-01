@@ -1,9 +1,6 @@
 namespace Wivuu.DataSeed.Tests.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
     using Wivuu.DataSeed.Tests.Domain;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Wivuu.DataSeed.Tests.Domain.DataSeedTestContext>

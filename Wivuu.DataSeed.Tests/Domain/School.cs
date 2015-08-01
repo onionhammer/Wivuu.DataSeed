@@ -8,16 +8,10 @@ namespace Wivuu.DataSeed.Tests.Domain
 {
     public class School
     {
-        public School()
-        {
-            this.Classes  = new HashSet<Class>();
-            this.Students = new HashSet<Student>();
-        }
-
         public Guid Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Class> Classes { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Class> Classes { get; set; } = new HashSet<Class>();
+        public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
     }
 }

@@ -35,36 +35,30 @@ namespace Wivuu.DataSeed
         /// </summary>
         /// <param name="random">The random object to use to generate the guid.</param>
         /// <returns>The next random guid.</returns>
-        public static Guid NextGuid(this Random random)
-        {
-            return new Guid(
-                a: random.Next(),
-                b: (short)random.Next(short.MinValue, short.MaxValue),
-                c: (byte)random.Next(0, 255),
-                d: (byte)random.Next(0, 255),
-                e: (byte)random.Next(0, 255),
-                f: (byte)random.Next(0, 255),
-                g: (byte)random.Next(0, 255),
-                h: (byte)random.Next(0, 255),
-                i: (byte)random.Next(0, 255),
-                j: (byte)random.Next(0, 255),
-                k: (byte)random.Next(0, 255)
-            );
-        }
+        public static Guid NextGuid(this Random random) => new Guid(
+            a: random.Next(),
+            b: (short)random.Next(short.MinValue, short.MaxValue),
+            c: (byte)random.Next(0, 255),
+            d: (byte)random.Next(0, 255),
+            e: (byte)random.Next(0, 255),
+            f: (byte)random.Next(0, 255),
+            g: (byte)random.Next(0, 255),
+            h: (byte)random.Next(0, 255),
+            i: (byte)random.Next(0, 255),
+            j: (byte)random.Next(0, 255),
+            k: (byte)random.Next(0, 255)
+        );
 
         /// <summary>
         /// Gets the next random <see cref="DateTime"/> from 1990 to 2020.
         /// </summary>
         /// <param name="random">The random object used to generate the datetime.</param>
         /// <returns>A random <see cref="DateTime"/>.</returns>
-        public static DateTime NextDateTime(this Random random)
-        {
-            return new DateTime(
-                random.Next(1990, 2020),
-                random.Next(1, 12),
-                random.Next(1, 28)
-            );
-        }
+        public static DateTime NextDateTime(this Random random) => new DateTime(
+            random.Next(1990, 2020),
+            random.Next(1, 12),
+            random.Next(1, 28)
+        );
 
         /// <summary>
         /// Gets the next random <see cref="DateTime?"/>.
