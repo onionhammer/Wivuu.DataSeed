@@ -29,18 +29,20 @@ is your DbContext class.
 ```C#
 public class AddClasses : DataMigration<MyDbContext>
 {
+    protected Random Random { get; } = new Random(0x01);
+    
     protected override void Apply(MyDbContext context)
     {
         // Add classes
         context.Classes.Add(new Class
         {
-            Id   = Guid.NewGuid(),
+            Id   = Random.NextGuid(),
             Name = "Biology 101"
         });
 
         context.Classes.Add(new Class
         {
-            Id   = Guid.NewGuid(),
+            Id   = Random.NextGuid(),
             Name = "Physics 201"
         });
     }
