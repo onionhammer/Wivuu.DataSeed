@@ -1,6 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
+using System.IO;
+using System.Reflection;
 
 namespace Wivuu.DataSeed
 {
@@ -26,6 +29,15 @@ namespace Wivuu.DataSeed
         public virtual bool AlwaysRun
         {
             get { return false; }
+        }
+
+        private string AssemblyPath
+        {
+            get
+            {
+                var absolutePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+                return Path.GetDirectoryName(absolutePath);
+            }
         }
 
         public virtual bool AlreadyApplied(T context)
