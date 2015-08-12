@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Wivuu.DataSeed.Tests.Domain
 {
-    public class DataSeedTestContext : DbContext
+    public class DataSeedTestContext : SeededDbContext
     {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

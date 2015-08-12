@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wivuu.DataSeed</RootNamespace>
     <AssemblyName>Wivuu.DataSeed</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -70,14 +70,16 @@
     <Compile Include="DataMigration.cs" />
     <Compile Include="DataMigrationHistory.cs" />
     <Compile Include="InitialDataMigration.cs" />
-    <None Include="Packaging\source\201506132356482_dataseed.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
+    <Compile Include="SeededDbContext.cs" />
     <Compile Include="SeedManagerExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Packaging\NuGet.targets" />
+    <None Include="Packaging\NuGet.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Wivuu.DataSeed.nuspec" />
   </ItemGroup>

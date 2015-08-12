@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>$id$</id>
-    <version>0.2.1-beta</version>
+    <version>1.0.0</version>
     <title>$title$</title>
     <authors>Erik O'Leary</authors>
     <owners>Erik O'Leary</owners>
@@ -17,8 +17,4 @@
     <copyright>Copyright 2015</copyright>
     <tags>EntityFramework data model</tags>
   </metadata>
-  <files>
-    <!-- Templates -->
-    <file src="Packaging\source\*.pp" target="content\Migrations" />
-  </files>
 </package>

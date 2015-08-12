@@ -8,6 +8,7 @@ schema changes.
 
 # Usage
 
+## Invoke the dataseed
 Using DataSeed is simple, after installing the package to your code-first 
 enabled project, open your Configuration.cs file, in the `Seed` method, add
 the following call:
@@ -21,6 +22,13 @@ protected override void Seed(MyDbContext context)
 
 This is DataSeed's hook into the standard EntityFramework seeding process. Now
 DataSeed will automatically be looped in when you invoke `update-database`.
+
+## Setting up the DataMigrationHistory table
+The next step is to update your DbContext class to extend the SeededDbContext class 
+(which in turn extends the DbContext). This adds a __DataMigrationHistory table
+to your database to help track which data migrations have already been applied. 
+That done, invoke 'add-migration dataseed' from your Package Manager Console, this 
+will add a migration for your new table.
 
 ## Your first Data Migration
 Now you can create a new class extending from DataMigration&lt;T&gt;, where T 
