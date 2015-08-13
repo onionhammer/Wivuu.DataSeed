@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Wivuu.DataSeed
 {
     [Table("__DataMigrationHistory")]
-    public class DataMigrationHistory
+    internal class DataMigrationHistory
     {
         [Key]
         public string MigrationId { get; set; }

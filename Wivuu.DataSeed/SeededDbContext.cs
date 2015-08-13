@@ -1,15 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 
 namespace Wivuu.DataSeed
 {
     public class SeededDbContext : DbContext
     {
-        public DbSet<DataMigrationHistory> __DataMigrationHistory { get; set; }
+        #region Properties
+
+        internal DbSet<DataMigrationHistory> __DataMigrationHistory { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public SeededDbContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection) { }
+        public SeededDbContext(ObjectContext objectContext, bool dbContextOwnsObjectContext) : base(objectContext, dbContextOwnsObjectContext) { }
+        public SeededDbContext(string nameOrConnectionString, DbCompiledModel model) : base(nameOrConnectionString, model) { }
+        public SeededDbContext(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection) : base(existingConnection, model, contextOwnsConnection) { }
+        protected SeededDbContext() : base() { }
+        protected SeededDbContext(DbCompiledModel model) : base(model) { }
+     
+        #endregion
     }
 }
