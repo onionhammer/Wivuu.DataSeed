@@ -15,6 +15,7 @@ namespace Wivuu.DataSeed
 
         #region Constructors
 
+        public SeededDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
         public SeededDbContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection) { }
         public SeededDbContext(ObjectContext objectContext, bool dbContextOwnsObjectContext) : base(objectContext, dbContextOwnsObjectContext) { }
         public SeededDbContext(string nameOrConnectionString, DbCompiledModel model) : base(nameOrConnectionString, model) { }

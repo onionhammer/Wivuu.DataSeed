@@ -4,7 +4,7 @@
     <NuGetPath>$(SolutionDir).nuget\nuget.exe</NuGetPath>
     <OutputDir>$(OutDir)</OutputDir>
   </PropertyGroup>
-  <Target Name="AfterBuild" Condition=" '$(Configuration)' != 'Packaging' ">
-    <Exec Command="&quot;$(NuGetPath)&quot; pack -OutputDirectory $(OutputDir)" />
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Debug' ">
+    <Exec Command="&quot;$(NuGetPath)&quot; pack" />
   </Target>
 </Project>
