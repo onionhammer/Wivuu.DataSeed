@@ -8,26 +8,26 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
     {
         public override bool AlwaysRun => true;
 
-        public override int Order => 1;
+        public override int Order => 2;
 
-        protected override void Apply(DataSeedTestContext context)
+        protected override void Apply(DataSeedTestContext db)
         {
-            var random = new Random(0x1);
-            var school = context.Schools.FirstOrDefault();
+            var random      = new Random(0x1);
+            var scienceDept = db.Departments.Single(d => d.Name == "Science");
 
             // Add classes
-            context.Classes.Add(new Class
+            db.Classes.Add(new Class
             {
-                Id     = random.NextGuid(),
-                Name   = "Biology 101",
-                School = school
+                Id         = random.NextGuid(),
+                Name       = "Biology 101",
+                Department = scienceDept
             });
 
-            context.Classes.Add(new Class
+            db.Classes.Add(new Class
             {
-                Id     = random.NextGuid(),
-                Name   = "Physics 201",
-                School = school
+                Id         = random.NextGuid(),
+                Name       = "Physics 201",
+                Department = scienceDept
             });
         }
 

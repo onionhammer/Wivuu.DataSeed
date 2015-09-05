@@ -25,6 +25,7 @@ namespace Wivuu.DataSeed.Tests.Domain
             modelBuilder.Entity<Student>().Property(s => s.FirstName).IsRequired();
             modelBuilder.Entity<Student>().Property(s => s.LastName).IsRequired();
             modelBuilder.Entity<Class>().Property(p => p.Name).IsRequired();
+            modelBuilder.Entity<Department>().Property(p => p.Name).IsRequired();
         }
 
         public DbSet<School> Schools { get; set; }
@@ -32,5 +33,7 @@ namespace Wivuu.DataSeed.Tests.Domain
         public DbSet<Class> Classes { get; set; }
 
         public DbSet<Student> Students { get; set; }
+
+        public DbSet<Department> Departments { get; set; }
     }
 }

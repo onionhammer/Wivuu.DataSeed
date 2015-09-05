@@ -13,7 +13,7 @@ namespace Wivuu.DataSeed.Tests.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201509052251272_db setup"; }
+            get { return "201509052342349_db setup"; }
         }
         
         string IMigrationMetadata.Source

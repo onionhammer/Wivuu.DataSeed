@@ -7,12 +7,12 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
     {
         public override int Order => 0;
 
-        protected override void Apply(DataSeedTestContext context)
+        protected override void Apply(DataSeedTestContext db)
         {
             var random = new Random(0x2);
 
             // Add "Summer Heights High" school
-            var school = context.Schools.Add(new School
+            var school = db.Schools.Add(new School
             {
                 Id   = random.NextGuid(),
                 Name = "Summer Heights High"
@@ -26,7 +26,7 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 LastName  = "Johnson"
             });
 
-            context.SaveChanges();
+            db.SaveChanges();
         }
     }
 }

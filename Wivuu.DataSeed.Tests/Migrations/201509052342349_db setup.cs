@@ -22,11 +22,26 @@ namespace Wivuu.DataSeed.Tests.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         Name = c.String(nullable: false),
-                        SchoolId = c.Guid(nullable: false),
+                        DepartmentId = c.Guid(nullable: false),
+                        School_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Schools", t => t.SchoolId, cascadeDelete: true)
-                .Index(t => t.SchoolId);
+                .ForeignKey("dbo.Departments", t => t.DepartmentId, cascadeDelete: true)
+                .ForeignKey("dbo.Schools", t => t.School_Id)
+                .Index(t => t.DepartmentId)
+                .Index(t => t.School_Id);
+            
+            CreateTable(
+                "dbo.Departments",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false),
+                        School_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Schools", t => t.School_Id)
+                .Index(t => t.School_Id);
             
             CreateTable(
                 "dbo.Schools",
@@ -67,17 +82,22 @@ namespace Wivuu.DataSeed.Tests.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.Departments", "School_Id", "dbo.Schools");
             DropForeignKey("dbo.Students", "School_Id", "dbo.Schools");
             DropForeignKey("dbo.Student_Class", "Class_Id", "dbo.Classes");
             DropForeignKey("dbo.Student_Class", "Student_Id", "dbo.Students");
-            DropForeignKey("dbo.Classes", "SchoolId", "dbo.Schools");
+            DropForeignKey("dbo.Classes", "School_Id", "dbo.Schools");
+            DropForeignKey("dbo.Classes", "DepartmentId", "dbo.Departments");
             DropIndex("dbo.Student_Class", new[] { "Class_Id" });
             DropIndex("dbo.Student_Class", new[] { "Student_Id" });
             DropIndex("dbo.Students", new[] { "School_Id" });
-            DropIndex("dbo.Classes", new[] { "SchoolId" });
+            DropIndex("dbo.Departments", new[] { "School_Id" });
+            DropIndex("dbo.Classes", new[] { "School_Id" });
+            DropIndex("dbo.Classes", new[] { "DepartmentId" });
             DropTable("dbo.Student_Class");
             DropTable("dbo.Students");
             DropTable("dbo.Schools");
+            DropTable("dbo.Departments");
             DropTable("dbo.Classes");
             DropTable("dbo.__DataMigrationHistory");
         }

@@ -79,14 +79,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DataMigrations\AddClasses.cs" />
+    <Compile Include="DataMigrations\AddDepartments.cs" />
     <Compile Include="DataMigrations\AddSchools.cs" />
     <Compile Include="Domain\Class.cs" />
     <Compile Include="Domain\DataSeedTestContext.cs" />
+    <Compile Include="Domain\Department.cs" />
     <Compile Include="Domain\School.cs" />
     <Compile Include="Domain\Student.cs" />
-    <Compile Include="Migrations\201509052251272_db setup.cs" />
-    <Compile Include="Migrations\201509052251272_db setup.Designer.cs">
-      <DependentUpon>201509052251272_db setup.cs</DependentUpon>
+    <Compile Include="Migrations\201509052342349_db setup.cs" />
+    <Compile Include="Migrations\201509052342349_db setup.Designer.cs">
+      <DependentUpon>201509052342349_db setup.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,8 +106,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201509052251272_db setup.resx">
-      <DependentUpon>201509052251272_db setup.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201509052342349_db setup.resx">
+      <DependentUpon>201509052342349_db setup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>
