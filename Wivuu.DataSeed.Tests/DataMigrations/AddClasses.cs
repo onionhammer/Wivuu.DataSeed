@@ -6,25 +6,28 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
 {
     public class AddClasses : DataMigration<DataSeedTestContext>
     {
-        private Random Random { get; } = new Random(0x1);
-
         public override bool AlwaysRun => true;
 
         public override int Order => 1;
 
         protected override void Apply(DataSeedTestContext context)
         {
+            var random = new Random(0x1);
+            var school = context.Schools.FirstOrDefault();
+
             // Add classes
             context.Classes.Add(new Class
             {
-                Id   = Random.NextGuid(),
-                Name = "Biology 101"
+                Id     = random.NextGuid(),
+                Name   = "Biology 101",
+                School = school
             });
 
             context.Classes.Add(new Class
             {
-                Id   = Random.NextGuid(),
-                Name = "Physics 201"
+                Id     = random.NextGuid(),
+                Name   = "Physics 201",
+                School = school
             });
         }
 

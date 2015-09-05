@@ -7,13 +7,13 @@ namespace Wivuu.DataSeed.Tests.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class first : IMigrationMetadata
+    public sealed partial class dbsetup : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(first));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dbsetup));
         
         string IMigrationMetadata.Id
         {
-            get { return "201506132356208_first"; }
+            get { return "201509052251272_db setup"; }
         }
         
         string IMigrationMetadata.Source

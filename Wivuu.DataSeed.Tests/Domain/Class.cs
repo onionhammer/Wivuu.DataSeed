@@ -10,7 +10,9 @@ namespace Wivuu.DataSeed.Tests.Domain
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public Guid SchoolId { get; set; }
 
         public virtual ICollection<Student> Students { get; set; } = new HashSet<Student>();
+        public virtual School School { get; set; }
     }
 }

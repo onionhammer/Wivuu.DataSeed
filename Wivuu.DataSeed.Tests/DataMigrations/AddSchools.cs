@@ -9,22 +9,24 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
 
         protected override void Apply(DataSeedTestContext context)
         {
-            // Add "Summer Heights High" school
-            var school = new School
-            {
-                Id   = Guid.NewGuid(),
-                Name = "Summer Heights High"
-            };
+            var random = new Random(0x2);
 
-            context.Schools.Add(school);
+            // Add "Summer Heights High" school
+            var school = context.Schools.Add(new School
+            {
+                Id   = random.NextGuid(),
+                Name = "Summer Heights High"
+            });
 
             // Add students
             school.Students.Add(new Student
             {
-                Id        = Guid.NewGuid(),
+                Id        = random.NextGuid(),
                 FirstName = "Jamie",
                 LastName  = "Johnson"
             });
+
+            context.SaveChanges();
         }
     }
 }

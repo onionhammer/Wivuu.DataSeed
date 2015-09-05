@@ -84,13 +84,9 @@
     <Compile Include="Domain\DataSeedTestContext.cs" />
     <Compile Include="Domain\School.cs" />
     <Compile Include="Domain\Student.cs" />
-    <Compile Include="Migrations\201506132356208_first.cs" />
-    <Compile Include="Migrations\201506132356208_first.Designer.cs">
-      <DependentUpon>201506132356208_first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508120332181_db seed.cs" />
-    <Compile Include="Migrations\201508120332181_db seed.Designer.cs">
-      <DependentUpon>201508120332181_db seed.cs</DependentUpon>
+    <Compile Include="Migrations\201509052251272_db setup.cs" />
+    <Compile Include="Migrations\201509052251272_db setup.Designer.cs">
+      <DependentUpon>201509052251272_db setup.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,18 +98,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201506132356208_first.resx">
-      <DependentUpon>201506132356208_first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508120332181_db seed.resx">
-      <DependentUpon>201508120332181_db seed.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Wivuu.DataSeed\Wivuu.DataSeed.csproj">
       <Project>{b00a2203-7ade-4915-9bd9-5cf79e894d44}</Project>
       <Name>Wivuu.DataSeed</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201509052251272_db setup.resx">
+      <DependentUpon>201509052251272_db setup.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
