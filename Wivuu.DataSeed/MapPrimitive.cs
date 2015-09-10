@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -58,6 +59,25 @@ namespace Wivuu.DataSeed
 
             mapping(destination, source);
             return destination;
+        }
+
+        public static T MapDictionary<T>(T dest, IDictionary<string, object> value)
+            where T : class, new()
+        {
+            var type  = typeof(T);
+            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                            .ToDictionary(t => t.Name);
+
+            foreach (var pair in value)
+            {
+                PropertyInfo prop;
+                if (props.TryGetValue(pair.Key, out prop) == false)
+                    continue;
+
+                prop.SetValue(dest, pair.Value);
+            }
+
+            return dest;
         }
 
         private static Action<T, T> CreateMap<T>(T value)
@@ -200,6 +220,13 @@ namespace Wivuu.DataSeed
 
     public static class IDbExtensions
     {
+        /// <summary>
+        /// Add or update the entity matching the input keys. The parameters in the `value`
+        /// object will be mapped to the destination
+        /// </summary>
+        /// <param name="table">The table containing the entities</param>
+        /// <param name="value">The source object</param>
+        /// <returns>The matching (or newly created) object</returns>
         public static T AddOrUpdate<T>(this DbContext db, IDbSet<T> table, 
             T value, params object[] keys)
             where T : class, new()
@@ -217,10 +244,19 @@ namespace Wivuu.DataSeed
                 return MapPrimitive.Map<T, T>(dest, value);
         }
 
+        /// <summary>
+        /// Add or update the entity matching the input keys. The parameters in the `value`
+        /// object will be mapped to the destination
+        /// </summary>
+        /// <param name="table">The table containing the entities</param>
+        /// <param name="value">The source object</param>
+        /// <returns>The matching (or newly created) object</returns>
         public static T AddOrUpdateEx<T, K>(this DbContext db, IDbSet<T> table,
             K value, params object[] keys)
             where T : class, new()
         {
+            Contract.Assert(typeof(T) != typeof(K), "The type of the source passed should NOT match the destination.");
+
             var dest = table.Find(keys);
             if (dest == null)
             {
@@ -233,6 +269,32 @@ namespace Wivuu.DataSeed
             else
                 // Map values
                 return MapPrimitive.Map(dest, value);
+        }
+
+        /// <summary>
+        /// Add or update the entity matching the input keys. The parameters in the `values` 
+        /// dictionary will be mapped to the destination
+        /// </summary>
+        /// <param name="table">The table containing the entities</param>
+        /// <param name="values">The dictionary containing the source values</param>
+        /// <param name="keys"></param>
+        /// <returns>The matching (or newly created) object</returns>
+        public static T AddOrUpdate<T>(this DbContext db, IDbSet<T> table,
+            IDictionary<string, object> values, params object[] keys)
+            where T : class, new()
+        {
+            var dest = table.Find(keys);
+            if (dest == null)
+            {
+                table.Add(dest = new T());
+
+                // Map values & keys to dest
+                MapPrimitive.MapDictionary(dest, values);
+                return MapPrimitive.MapKeys(db, dest, keys);
+            }
+            else
+                // Map values
+                return MapPrimitive.MapDictionary(dest, values);
         }
     }
 }

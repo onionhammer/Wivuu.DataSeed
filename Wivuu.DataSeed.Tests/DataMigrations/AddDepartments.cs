@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Wivuu.DataSeed.Tests.Domain;
 
@@ -16,31 +17,30 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             var school      = db.Schools.First();
 
             // Option 1
-            //var scienceDept = Map(
-            //    db.Departments.SingleOrDefault(d => d.Name == "Science") ??
-            //    new Department { Id = random.NextGuid() },
+            //var scienceDept = db.AddOrUpdate(
+            //    db.Departments,
             //    new Department
             //    {
-            //        Name   = "Science 2",
+            //        Name   = "Science",
             //        School = school
-            //    });
+            //    }, random.NextGuid());
 
             // Option 2
-            //var scienceDept = db.Departments
-            //    .MapToExisting(random.NextGuid())
-            //    .Source(() => new Department
+            //var scienceDept = db.AddOrUpdateEx(
+            //    db.Departments,
+            //    new
             //    {
-            //        Name   = "Science 2",
+            //        Name = "Science",
             //        School = school
-            //    });
+            //    }, random.NextGuid());
 
             // Option 3
-            var scienceDept = db.AddOrUpdateEx(
+            var scienceDept = db.AddOrUpdate(
                 db.Departments,
-                new
+                new Dictionary<string, object>
                 {
-                    Name   = "Science",
-                    School = school
+                    [nameof(Department.Name)]   = "Science",
+                    [nameof(Department.School)] = school
                 }, random.NextGuid());
 
             db.SaveChanges();

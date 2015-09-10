@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
@@ -22,16 +23,39 @@ namespace Wivuu.DataSeed
 
         public virtual bool AlwaysRun => false;
 
-        private string AssemblyPath => Path.GetDirectoryName(
+        protected string AssemblyPath => Path.GetDirectoryName(
             new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
 
+        /// <summary>
+        /// Map the primitve, non-default properties of the input source 
+        /// object to the input destination object
+        /// </summary>
+        /// <param name="destination">The destination</param>
+        /// <param name="source">The source</param>
+        /// <returns>The destination object</returns>
         protected TModel Map<TModel>(TModel destination, TModel source)
             where TModel : class, new()
             => MapPrimitive.Map<TModel, TModel>(destination, source);
 
+        /// <summary>
+        /// Map the properties of the input source dictionary to the input destination object
+        /// </summary>
+        /// <param name="destination">The destination</param>
+        /// <param name="source">The source dictionary</param>
+        /// <returns>The destination object</returns>
+        protected TModel Map<TModel>(TModel destination, IDictionary<string, object> source)
+            where TModel : class, new()
+            => MapPrimitive.MapDictionary(destination, source);
+
+        /// <summary>
+        /// Map the properties of the input source object to the input destination object
+        /// </summary>
+        /// <param name="destination">The destination</param>
+        /// <param name="source">The source</param>
+        /// <returns>The destination object</returns>
         protected TModel MapEx<TModel, K>(TModel destination, K source)
             where TModel : class, new()
-            => MapPrimitive.Map<TModel, K>(destination, source);
+            => MapPrimitive.Map(destination, source);
 
         public virtual bool AlreadyApplied(T context)
         {
