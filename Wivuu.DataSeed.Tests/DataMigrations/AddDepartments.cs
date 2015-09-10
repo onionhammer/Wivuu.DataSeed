@@ -13,8 +13,8 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
 
         protected override void Apply(DataSeedTestContext db)
         {
-            var random      = new Random(0x3);
-            var school      = db.Schools.First();
+            var random = new Random(0x3);
+            var school = db.Schools.First();
 
             // Option 1
             //var scienceDept = db.AddOrUpdate(
