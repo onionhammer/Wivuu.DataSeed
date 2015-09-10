@@ -14,19 +14,36 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
         {
             var random      = new Random(0x3);
             var school      = db.Schools.First();
-            var scienceDept = db.Departments.SingleOrDefault(d => d.Name == "Science");
 
-            if (scienceDept == null)
-            {
-                scienceDept = db.Departments.Add(new Department
+            // Option 1
+            //var scienceDept = Map(
+            //    db.Departments.SingleOrDefault(d => d.Name == "Science") ??
+            //    new Department { Id = random.NextGuid() },
+            //    new Department
+            //    {
+            //        Name   = "Science 2",
+            //        School = school
+            //    });
+
+            // Option 2
+            //var scienceDept = db.Departments
+            //    .MapToExisting(random.NextGuid())
+            //    .Source(() => new Department
+            //    {
+            //        Name   = "Science 2",
+            //        School = school
+            //    });
+
+            // Option 3
+            var scienceDept = db.AddOrUpdate(
+                db.Departments,
+                new Department
                 {
-                    Id = random.NextGuid(),
-                    Name = "Science",
+                    Name   = "Science",
                     School = school
-                });
+                }, random.NextGuid());
 
-                db.SaveChanges();
-            }
+            db.SaveChanges();
         }
     }
 }

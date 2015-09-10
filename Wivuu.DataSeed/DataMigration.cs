@@ -25,6 +25,10 @@ namespace Wivuu.DataSeed
         private string AssemblyPath => Path.GetDirectoryName(
             new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
 
+        protected TModel Map<TModel>(TModel destination, TModel source)
+            where TModel : class, new()
+            => MapPrimitive.Map(destination, source);
+
         public virtual bool AlreadyApplied(T context)
         {
             // Construct query to check for existing migrations
