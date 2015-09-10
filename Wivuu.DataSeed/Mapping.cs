@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Wivuu.DataSeed
 {
-    public static class MapPrimitive
+    public static class Mapping
     {
         private static Dictionary<Type, object> _selfMappers
             = new Dictionary<Type, object>();
@@ -253,11 +253,11 @@ namespace Wivuu.DataSeed
                 table.Add(value);
 
                 // Map key to dest
-                return MapPrimitive.MapKeys(db, value, keys);
+                return Mapping.MapKeys(db, value, keys);
             }
             else
                 // Map values
-                return MapPrimitive.Map<T, T>(dest, value);
+                return Mapping.Map<T, T>(dest, value);
         }
 
         /// <summary>
@@ -279,12 +279,12 @@ namespace Wivuu.DataSeed
                 table.Add(dest = new T());
 
                 // Map values & keys to dest
-                MapPrimitive.Map(dest, value);
-                return MapPrimitive.MapKeys(db, dest, keys);
+                Mapping.Map(dest, value);
+                return Mapping.MapKeys(db, dest, keys);
             }
             else
                 // Map values
-                return MapPrimitive.Map(dest, value);
+                return Mapping.Map(dest, value);
         }
 
         /// <summary>
@@ -305,12 +305,12 @@ namespace Wivuu.DataSeed
                 table.Add(dest = new T());
 
                 // Map values & keys to dest
-                MapPrimitive.MapDictionary(dest, values);
-                return MapPrimitive.MapKeys(db, dest, keys);
+                Mapping.MapDictionary(dest, values);
+                return Mapping.MapKeys(db, dest, keys);
             }
             else
                 // Map values
-                return MapPrimitive.MapDictionary(dest, values);
+                return Mapping.MapDictionary(dest, values);
         }
     }
 }

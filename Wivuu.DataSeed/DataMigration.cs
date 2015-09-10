@@ -35,7 +35,7 @@ namespace Wivuu.DataSeed
         /// <returns>The destination object</returns>
         protected TModel Map<TModel>(TModel destination, TModel source)
             where TModel : class, new()
-            => MapPrimitive.Map<TModel, TModel>(destination, source);
+            => Mapping.Map<TModel, TModel>(destination, source);
 
         /// <summary>
         /// Map the properties of the input source dictionary to the input destination object
@@ -45,7 +45,7 @@ namespace Wivuu.DataSeed
         /// <returns>The destination object</returns>
         protected TModel Map<TModel>(TModel destination, IDictionary<string, object> source)
             where TModel : class, new()
-            => MapPrimitive.MapDictionary(destination, source);
+            => Mapping.MapDictionary(destination, source);
 
         /// <summary>
         /// Map the properties of the input source object to the input destination object
@@ -55,7 +55,7 @@ namespace Wivuu.DataSeed
         /// <returns>The destination object</returns>
         protected TModel MapEx<TModel, K>(TModel destination, K source)
             where TModel : class, new()
-            => MapPrimitive.Map(destination, source);
+            => Mapping.Map(destination, source);
 
         public virtual bool AlreadyApplied(T context)
         {
