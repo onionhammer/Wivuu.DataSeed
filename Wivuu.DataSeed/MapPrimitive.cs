@@ -17,6 +17,10 @@ namespace Wivuu.DataSeed
         private static Dictionary<Type, object> _dynamicMappers
             = new Dictionary<Type, object>();
 
+        /// <summary>
+        /// Map the source to the destination
+        /// </summary>
+        /// <returns>The destination</returns>
         public static T Map<T>(T destination, T source)
             where T : class, new()
         {
@@ -39,6 +43,10 @@ namespace Wivuu.DataSeed
             return destination;
         }
 
+        /// <summary>
+        /// Map the source to the destination
+        /// </summary>
+        /// <returns>The destination</returns>
         public static T Map<T, K>(T destination, K source)
             where T : class, new()
         {
@@ -61,6 +69,10 @@ namespace Wivuu.DataSeed
             return destination;
         }
 
+        /// <summary>
+        /// Map the source dictionary to the destination
+        /// </summary>
+        /// <returns>The destination</returns>
         public static T MapDictionary<T>(T dest, IDictionary<string, object> value)
             where T : class, new()
         {
@@ -78,6 +90,31 @@ namespace Wivuu.DataSeed
             }
 
             return dest;
+        }
+
+        /// <summary>
+        /// Map the input keys to primary keys to the destination
+        /// </summary>
+        /// <returns>The destination</returns>
+        public static T MapKeys<T>(DbContext db, T value, object[] keys)
+            where T : class, new()
+        {
+            // Map key to dest
+            var objectContext = (db as IObjectContextAdapter).ObjectContext;
+            var set           = objectContext.CreateObjectSet<T>();
+            var keyMembers    = set.EntitySet.ElementType.KeyMembers;
+            var properties    = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            for (var i = 0; i < keys.Length; ++i)
+            {
+                var member = keyMembers[i]?.Name;
+                var prop = properties.Where(p => p.Name == member).SingleOrDefault();
+
+                if (prop != null)
+                    prop.SetMethod.Invoke(value, new[] { keys[i] });
+            }
+
+            return value;
         }
 
         private static Action<T, T> CreateMap<T>(T value)
@@ -194,27 +231,6 @@ namespace Wivuu.DataSeed
                 default:
                     return false;
             }
-        }
-
-        public static T MapKeys<T>(DbContext db, T value, object[] keys)
-            where T : class, new()
-        {
-            // Map key to dest
-            var objectContext = (db as IObjectContextAdapter).ObjectContext;
-            var set           = objectContext.CreateObjectSet<T>();
-            var keyMembers    = set.EntitySet.ElementType.KeyMembers;
-            var properties    = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            for (var i = 0; i < keys.Length; ++i)
-            {
-                var member = keyMembers[i]?.Name;
-                var prop = properties.Where(p => p.Name == member).SingleOrDefault();
-
-                if (prop != null)
-                    prop.SetMethod.Invoke(value, new[] { keys[i] });
-            }
-
-            return value;
         }
     }
 
