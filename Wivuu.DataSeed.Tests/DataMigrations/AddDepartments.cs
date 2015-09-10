@@ -35,9 +35,9 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             //    });
 
             // Option 3
-            var scienceDept = db.AddOrUpdate(
+            var scienceDept = db.AddOrUpdateEx(
                 db.Departments,
-                new Department
+                new
                 {
                     Name   = "Science",
                     School = school

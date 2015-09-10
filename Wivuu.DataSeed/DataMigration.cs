@@ -27,7 +27,11 @@ namespace Wivuu.DataSeed
 
         protected TModel Map<TModel>(TModel destination, TModel source)
             where TModel : class, new()
-            => MapPrimitive.Map(destination, source);
+            => MapPrimitive.Map<TModel, TModel>(destination, source);
+
+        protected TModel MapEx<TModel, K>(TModel destination, K source)
+            where TModel : class, new()
+            => MapPrimitive.Map<TModel, K>(destination, source);
 
         public virtual bool AlreadyApplied(T context)
         {
