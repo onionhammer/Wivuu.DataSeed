@@ -26,7 +26,7 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                     Name       = "Biology 101",
                     Department = scienceDept
                 })
-                .Default(() => db.Classes.Add(new Class()));
+                .Default(c => db.Classes.Add(c));
 
             db.Classes.Find(physicsId)
                 .Update(new Class
@@ -35,7 +35,7 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                     Name       = "Physics 201",
                     Department = scienceDept
                 })
-                .Default(() => db.Classes.Add(new Class()));
+                .Default(c => db.Classes.Add(c));
         }
     }
 }

@@ -48,6 +48,27 @@ namespace Wivuu.DataSeed
                 return Mapping.Map(Destination, Source);
         }
 
+        /// <summary>
+        /// Calls callback when the entity is not found
+        /// </summary>
+        public T Default(Func<T, T> callback)
+        {
+            if (Destination == default(T))
+            {
+                if (SourceT != null)
+                    return callback(SourceT);
+
+                Destination = callback(Destination);
+            }
+
+            if (SourceT != null)
+                return Mapping.Map(Destination, SourceT, false);
+            else if (SourceD != null)
+                return Mapping.MapDictionary(Destination, SourceD);
+            else
+                return Mapping.Map(Destination, Source);
+        }
+
         #endregion
     }
 
