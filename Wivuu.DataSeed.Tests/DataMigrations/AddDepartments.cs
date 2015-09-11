@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Wivuu.DataSeed.Tests.Domain;
 
@@ -13,35 +12,17 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
 
         protected override void Apply(DataSeedTestContext db)
         {
-            var random = new Random(0x3);
-            var school = db.Schools.First();
+            var random        = new Random(0x3);
+            var school        = db.Schools.First();
+            var scienceDeptId = random.NextGuid();
 
-            // Option 1
-            //var scienceDept = db.AddOrUpdate(
-            //    db.Departments,
-            //    new Department
-            //    {
-            //        Name   = "Science",
-            //        School = school
-            //    }, random.NextGuid());
-
-            // Option 2
-            //var scienceDept = db.AddOrUpdateEx(
-            //    db.Departments,
-            //    new
-            //    {
-            //        Name = "Science",
-            //        School = school
-            //    }, random.NextGuid());
-
-            // Option 3
-            var scienceDept = db.AddOrUpdate(
-                db.Departments,
-                new Dictionary<string, object>
+            db.Departments.Find(scienceDeptId)
+                .Update(new
                 {
-                    [nameof(Department.Name)]   = "Science",
-                    [nameof(Department.School)] = school
-                }, random.NextGuid());
+                    Name   = "Science",
+                    School = school
+                })
+                .Default(() => db.Departments.Add(new Department { Id = scienceDeptId }));
 
             db.SaveChanges();
         }

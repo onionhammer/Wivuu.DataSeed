@@ -74,6 +74,7 @@
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="SeededDbContext.cs" />
     <Compile Include="SeedManagerExtensions.cs" />
+    <Compile Include="FluentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

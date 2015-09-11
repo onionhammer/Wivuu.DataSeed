@@ -35,7 +35,7 @@ namespace Wivuu.DataSeed
         /// <returns>The destination object</returns>
         protected TModel Map<TModel>(TModel destination, TModel source)
             where TModel : class, new()
-            => Mapping.Map<TModel, TModel>(destination, source);
+            => Mapping.Map(destination, source);
 
         /// <summary>
         /// Map the properties of the input source dictionary to the input destination object
