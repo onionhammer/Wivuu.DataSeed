@@ -97,7 +97,7 @@ namespace Wivuu.DataSeed
 
             ParameterExpression
                 destination = Expression.Parameter(owner),
-                source = Expression.Parameter(owner);
+                source      = Expression.Parameter(owner);
 
             var variables   = new List<ParameterExpression>(capacity: props.Length);
             var expressions = new List<Expression>(capacity: props.Length);

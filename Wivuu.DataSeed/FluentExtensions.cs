@@ -76,7 +76,7 @@ namespace Wivuu.DataSeed
         /// </summary>
         public static StateContainer<T> Update<T>(this T self, Dictionary<string, object> values)
             where T : class, new()
-            => new StateContainer<T> { Destination = self, Source = values };
+            => new StateContainer<T> { Destination = self, SourceD = values };
 
         /// <summary>
         /// Starts the process of updating a record stored in this table
