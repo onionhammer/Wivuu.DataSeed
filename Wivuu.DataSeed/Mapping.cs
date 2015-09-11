@@ -8,27 +8,29 @@ namespace Wivuu.DataSeed
 {
     public static class Mapping
     {
-        private static Dictionary<Type, object> _selfMappers
-            = new Dictionary<Type, object>();
+        private static Dictionary<Tuple<Type, bool>, object> _selfMappers
+            = new Dictionary<Tuple<Type, bool>, object>();
 
         /// <summary>
         /// Map the source to the destination
         /// </summary>
         /// <returns>The destination</returns>
-        public static T Map<T>(T destination, T source)
+        public static T Map<T>(T destination, T source, bool mapAll)
             where T : class, new()
         {
             var type = typeof(T);
             if (destination == null)
                 destination = new T();
 
+            var key = Tuple.Create(type, mapAll);
+
             object mappingBox;
             Action<T, T> mapping;
-            if (!_selfMappers.TryGetValue(type, out mappingBox))
+            if (!_selfMappers.TryGetValue(key, out mappingBox))
             {
                 // Create Mapping logic
-                mapping = CreateMap(source);
-                _selfMappers[type] = mapping;
+                mapping = CreateMap(source, mapAll);
+                _selfMappers[key] = mapping;
             }
             else
                 mapping = mappingBox as Action<T, T>;
@@ -48,13 +50,15 @@ namespace Wivuu.DataSeed
             if (destination == null)
                 destination = new T();
 
+            var key = Tuple.Create(type, true);
+
             object mappingBox;
             Action<T, object> mapping;
-            if (!_selfMappers.TryGetValue(type, out mappingBox))
+            if (!_selfMappers.TryGetValue(key, out mappingBox))
             {
                 // Create Mapping logic
                 mapping = CreateMap(destination, source);
-                _selfMappers[type] = mapping;
+                _selfMappers[key] = mapping;
             }
             else
                 mapping = mappingBox as Action<T, object>;
@@ -86,7 +90,7 @@ namespace Wivuu.DataSeed
             return dest;
         }
 
-        private static Action<T, T> CreateMap<T>(T value)
+        private static Action<T, T> CreateMap<T>(T value, bool mapAll)
         {
             var owner = typeof(T);
             var props = owner.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -104,20 +108,30 @@ namespace Wivuu.DataSeed
                 var prop     = props[i];
                 var propType = prop.PropertyType;
 
-                if (ShouldCopy(propType) == false)
-                    continue;
+                if (mapAll)
+                {
+                    var get = Expression.Call(source, prop.GetMethod);
+                    var set = Expression.Call(destination, prop.SetMethod, get);
 
-                // Create copy 
-                var cached = Expression.Variable(propType);
-                variables.Add(cached);
+                    expressions.Add(set);
+                }
+                else
+                {
+                    if (ShouldCopy(propType) == false)
+                        continue;
 
-                var doAssign = Expression.Call(destination, prop.SetMethod, cached);
-                var test = Expression.NotEqual(cached, Expression.Default(propType));
+                    // Create copy 
+                    var cached = Expression.Variable(propType);
+                    variables.Add(cached);
 
-                expressions.Add(Expression.Assign(
-                    cached, Expression.Call(source, prop.GetMethod)));
-                expressions.Add(Expression.IfThen(
-                    test, doAssign));
+                    var doAssign = Expression.Call(destination, prop.SetMethod, cached);
+                    var test     = Expression.NotEqual(cached, Expression.Default(propType));
+
+                    expressions.Add(Expression.Assign(
+                        cached, Expression.Call(source, prop.GetMethod)));
+                    expressions.Add(Expression.IfThen(
+                        test, doAssign));
+                }
             }
 
             // Build body of lambda

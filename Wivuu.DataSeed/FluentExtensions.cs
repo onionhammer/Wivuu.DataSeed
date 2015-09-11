@@ -33,11 +33,15 @@ namespace Wivuu.DataSeed
         /// </summary>
         public T Default(Func<T> callback)
         {
+            var mapAll = false;
             if (Destination == default(T))
+            {
                 Destination = callback();
+                mapAll = true;
+            }
 
             if (SourceT != null)
-                return Mapping.Map(Destination, SourceT);
+                return Mapping.Map(Destination, SourceT, mapAll);
             else if (SourceD != null)
                 return Mapping.MapDictionary(Destination, SourceD);
             else

@@ -15,27 +15,27 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             var random      = new Random(0x1);
             var scienceDept = db.Departments.Single(d => d.Name == "Science");
 
+            var biologyId = random.NextGuid();
+            var physicsId = random.NextGuid();
+
             // Add classes
-            db.Classes.Add(new Class
-            {
-                Id         = random.NextGuid(),
-                Name       = "Biology 101",
-                Department = scienceDept
-            });
+            db.Classes.Find(biologyId)
+                .Update(new Class
+                {
+                    Id         = biologyId,
+                    Name       = "Biology 101",
+                    Department = scienceDept
+                })
+                .Default(() => db.Classes.Add(new Class()));
 
-            db.Classes.Add(new Class
-            {
-                Id         = random.NextGuid(),
-                Name       = "Physics 201",
-                Department = scienceDept
-            });
-        }
-
-        public override void Cleanup(DataSeedTestContext context)
-        {
-            // Remove classes
-            foreach (var course in context.Classes)
-                context.Classes.Remove(course);
+            db.Classes.Find(physicsId)
+                .Update(new Class
+                {
+                    Id         = physicsId,
+                    Name       = "Physics 201",
+                    Department = scienceDept
+                })
+                .Default(() => db.Classes.Add(new Class()));
         }
     }
 }
