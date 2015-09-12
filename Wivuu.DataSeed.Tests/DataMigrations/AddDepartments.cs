@@ -20,8 +20,8 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             db.Departments.Find(scienceDeptId)
                 .Update(new Dictionary<string, object>
                 {
-                    ["Name"]   = "Science",
-                    ["School"] = school
+                    [nameof(Department.Name)]   = "Science",
+                    [nameof(Department.School)] = school
                 })
                 .Default(() => db.Departments.Add(new Department { Id = scienceDeptId }));
 
