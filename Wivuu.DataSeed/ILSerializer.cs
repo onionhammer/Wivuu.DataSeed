@@ -31,43 +31,29 @@ namespace Wivuu.DataSeed
             where T : class
         {
             var typeBuilder = _assemblyModule.DefineType(
-                $"{expression.Name}op{Guid.NewGuid().ToString("N")}");
+                $"{typeof(T).Name}op{StringId()}");
 
-            var methodBuilder = typeBuilder.DefineMethod(
-                "Operation", MethodAttributes.Public | MethodAttributes.Static);
+            MethodBuilder operation;
+            operation = typeBuilder.DefineMethod(
+                nameof(operation), MethodAttributes.Public | MethodAttributes.Static);
 
-            expression.CompileToMethod(methodBuilder);
+            expression.CompileToMethod(operation);
 
             return Delegate.CreateDelegate(
                 expression.Type,
-                typeBuilder.CreateType().GetMethod("Operation")
+                typeBuilder.CreateType().GetMethod(nameof(operation))
             ) as T;
         }
 
         static ModuleBuilder CreateModule() =>
             // Define dynamic assembly
             AppDomain.CurrentDomain.DefineDynamicAssembly(
-                new AssemblyName(nameof(ILSerializer) + Guid.NewGuid().ToString("N")),
+                new AssemblyName(nameof(ILSerializer) + StringId()),
                 AssemblyBuilderAccess.RunAndSave
             ).DefineDynamicModule("Module");
 
-        static Delegate CompileToType(
-            this ModuleBuilder module,
-            Type type, LambdaExpression expression)
-        {
-            var typeBuilder = module.DefineType(
-                type.Name + "Operation" + Guid.NewGuid().ToString("N"));
-
-            var methodBuilder = typeBuilder.DefineMethod(
-                "Operation", MethodAttributes.Public | MethodAttributes.Static);
-
-            expression.CompileToMethod(methodBuilder);
-
-            return Delegate.CreateDelegate(
-                expression.Type,
-                typeBuilder.CreateType().GetMethod("Operation")
-            );
-        }
+        static string StringId() =>
+            Guid.NewGuid().ToString("N").Substring(0, 6);
 
         #endregion
     }
