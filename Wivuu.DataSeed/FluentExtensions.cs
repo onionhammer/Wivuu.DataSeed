@@ -57,8 +57,10 @@ namespace Wivuu.DataSeed
             {
                 if (SourceT != null)
                     return callback(SourceT);
-
-                Destination = callback(Destination);
+                else if (SourceD != null)
+                    return callback(Mapping.MapDictionary(Destination, SourceD));
+                else
+                    return callback(Mapping.Map(Destination, Source));
             }
 
             if (SourceT != null)

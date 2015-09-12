@@ -78,6 +78,8 @@ namespace Wivuu.DataSeed
             where T : class, new()
         {
             var type = typeof(T);
+            if (destination == null)
+                destination = new T();
 
             object mappingBox;
             Action<T, IDictionary<string, object>> mapping;

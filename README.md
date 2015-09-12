@@ -64,6 +64,56 @@ public class AddClasses : DataMigration<MyDbContext>
 
 # Advanced usage
 
+## Adding or Updating a model
+
+Often times when a migration is running, you want it to effectively be 'stateless', in
+this case meaning it doesn't matter whether the migration has been performed before or not,
+you just want the data to look like "this". As of 1.0.7, DataSeed has a new method of mapping
+your seed data onto your database, called an `Update`. There are three primary types of `Update`.
+
+### Domain Model to Domain Model
+```C#
+// Find a class (by key)
+db.Classes.Find(biologyId)
+    // Update the class with the following values
+    .Update(new Class
+    {
+        Id         = biologyId,
+        Name       = "Biology 101",
+        Department = scienceDept
+    })
+    // If the model didn't exist, do the following
+    .Default(c => db.Classes.Add(c));
+```
+
+### Other object to Domain Model
+```C#
+db.Classes.Find(physicsId)
+    // Note the use of an anonymous type
+    .Update(new
+    {
+        Id         = physicsId,
+        Name       = "Physics 201",
+        Department = scienceDept
+    })
+    .Default(() => db.Classes.Add(c));
+```
+
+### Dictionary to Domain Model
+```C#
+db.Classes.Find(physicsId)
+    .Update(new Dictionary<string, object>
+    {
+        ["Id"]         = physicsId,
+        ["Name"]       = "Physics 201",
+        ["Department"] = scienceDept
+    })
+    .Default(c => db.Classes.Add(c));
+```
+
+The above methods are available for any instance of a class when using the Wivuu.DataSeed namespace. They
+are built on top of Reflection.Emit, any mapping performed is cached in an in-memory assembly at runtime.
+
 ## Always Run
 
 Enable `AlwaysRun` if you want your data seed migration class to run every
