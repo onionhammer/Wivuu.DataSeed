@@ -11,6 +11,9 @@ namespace Wivuu.DataSeed
         private static Dictionary<Tuple<Type, bool>, object> _selfMappers
             = new Dictionary<Tuple<Type, bool>, object>();
 
+        private static Dictionary<Type, object> _dictMappers
+            = new Dictionary<Type, object>();
+
         /// <summary>
         /// Map the source to the destination
         /// </summary>
@@ -71,23 +74,73 @@ namespace Wivuu.DataSeed
         /// Map the source dictionary to the destination
         /// </summary>
         /// <returns>The destination</returns>
-        public static T MapDictionary<T>(T dest, IDictionary<string, object> value)
+        public static T MapDictionary<T>(T destination, IDictionary<string, object> source)
             where T : class, new()
         {
-            var type  = typeof(T);
-            var props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                            .ToDictionary(t => t.Name);
+            var type = typeof(T);
 
-            foreach (var pair in value)
+            object mappingBox;
+            Action<T, IDictionary<string, object>> mapping;
+            if (!_dictMappers.TryGetValue(type, out mappingBox))
             {
-                PropertyInfo prop;
-                if (props.TryGetValue(pair.Key, out prop) == false)
-                    continue;
+                // Create Mapping logic
+                mapping = CreateMap(destination);
+                _dictMappers[type] = mapping;
+            }
+            else
+                mapping = mappingBox as Action<T, IDictionary<string, object>>;
 
-                prop.SetValue(dest, pair.Value);
+            mapping(destination, source);
+            return destination;
+        }
+
+        private static Action<T, IDictionary<string, object>> CreateMap<T>(T value)
+        {
+            var owner      = typeof(T);
+            var sourceType = typeof(IDictionary<string, object>);
+            var props      = owner.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            ParameterExpression
+                destination = Expression.Parameter(owner),
+                source      = Expression.Parameter(sourceType);
+
+            var variables   = new List<ParameterExpression>();
+            var expressions = new List<Expression>(capacity: props.Length);
+            var tryGetValue = sourceType.GetMethod(nameof(IDictionary<string, object>.TryGetValue));
+
+            var local = Expression.Variable(typeof(object));//.MakeByRefType());
+            variables.Add(local);
+
+            // Loop through properties and assign them one by one
+            for (var i = 0; i < props.Length; ++i)
+            {
+                var prop     = props[i];
+                var propType = prop.PropertyType;
+
+                // Try to get the value
+                var tryGetLocal = Expression.Call(source, tryGetValue, Expression.Constant(prop.Name), local);
+                var doAssign    = Expression.Call(destination, 
+                    prop.SetMethod, Expression.Convert(local, prop.PropertyType));
+
+                expressions.Add(
+                    Expression.IfThen(tryGetLocal, doAssign)
+                );
             }
 
-            return dest;
+            // Build body of lambda
+            var body = Expression.Block(
+                variables, 
+                expressions
+            );
+
+            var action = Expression.Lambda<Action<T, IDictionary<string, object>>>(
+                body, destination, source
+            );
+
+            if (owner.IsVisible)
+                return ILSerializer.Compile(action);
+            else
+                return action.Compile();
         }
 
         private static Action<T, T> CreateMap<T>(T value, bool mapAll)
@@ -144,7 +197,10 @@ namespace Wivuu.DataSeed
                 body, destination, source
             );
 
-            return action.Compile();
+            if (owner.IsValueType)
+                return ILSerializer.Compile(action);
+            else
+                return action.Compile();
         }
 
         private static Action<T, K> CreateMap<T, K>(T destValue, K sourceValue)
@@ -158,7 +214,7 @@ namespace Wivuu.DataSeed
                 destination = Expression.Parameter(destType),
                 source      = Expression.Parameter(typeof(K));
 
-            var sourceT = Expression.Variable(sourceType);
+            var sourceT   = Expression.Variable(sourceType);
             var variables = new List<ParameterExpression>(capacity: sourceProps.Length)
             {
                 sourceT
@@ -197,7 +253,10 @@ namespace Wivuu.DataSeed
                 body, destination, source
             );
 
-            return action.Compile();
+            if (destType.IsValueType && sourceType.IsVisible)
+                return ILSerializer.Compile(action);
+            else
+                return action.Compile();
         }
 
         private static bool ShouldCopy(Type t)

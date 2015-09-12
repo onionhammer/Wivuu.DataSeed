@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Wivuu.DataSeed.Tests.Domain;
 
@@ -17,10 +18,10 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             var scienceDeptId = random.NextGuid();
 
             db.Departments.Find(scienceDeptId)
-                .Update(new
+                .Update(new Dictionary<string, object>
                 {
-                    Name   = "Science",
-                    School = school
+                    ["Name"]   = "Science",
+                    ["School"] = school
                 })
                 .Default(() => db.Departments.Add(new Department { Id = scienceDeptId }));
 
