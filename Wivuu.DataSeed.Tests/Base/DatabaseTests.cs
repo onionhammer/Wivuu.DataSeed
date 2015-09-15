@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wivuu.DataSeed.Tests.Domain;
 using Wivuu.DataSeed.Tests.Migrations;
 

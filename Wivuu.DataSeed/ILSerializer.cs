@@ -9,20 +9,21 @@ namespace Wivuu.DataSeed
     {
         #region Fields
 
-        private static readonly ModuleBuilder _assemblyModule;
-
-        #endregion
-
-        #region Constructor
-
-        static ILSerializer()
-        {
-            _assemblyModule = CreateModule();
-        }
+        private static readonly ModuleBuilder _assemblyModule = CreateModule();
 
         #endregion
 
         #region Methods
+
+        static ModuleBuilder CreateModule() =>
+            // Define dynamic assembly
+            AppDomain.CurrentDomain.DefineDynamicAssembly(
+                new AssemblyName(nameof(ILSerializer) + StringId()),
+                AssemblyBuilderAccess.RunAndSave
+            ).DefineDynamicModule("Module");
+
+        static string StringId() =>
+            Guid.NewGuid().ToString("N").Substring(0, 6);
 
         /// <summary>
         /// Compile expression to type
@@ -44,16 +45,6 @@ namespace Wivuu.DataSeed
                 typeBuilder.CreateType().GetMethod(nameof(operation))
             ) as T;
         }
-
-        static ModuleBuilder CreateModule() =>
-            // Define dynamic assembly
-            AppDomain.CurrentDomain.DefineDynamicAssembly(
-                new AssemblyName(nameof(ILSerializer) + StringId()),
-                AssemblyBuilderAccess.RunAndSave
-            ).DefineDynamicModule("Module");
-
-        static string StringId() =>
-            Guid.NewGuid().ToString("N").Substring(0, 6);
 
         #endregion
     }

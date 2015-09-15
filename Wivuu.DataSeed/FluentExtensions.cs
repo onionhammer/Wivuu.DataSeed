@@ -37,7 +37,7 @@ namespace Wivuu.DataSeed
             if (Destination == default(T))
             {
                 Destination = callback();
-                mapAll = true;
+                mapAll      = true;
             }
 
             if (SourceT != null)
