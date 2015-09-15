@@ -96,7 +96,7 @@ db.Classes.Find(physicsId)
         Name       = "Physics 201",
         Department = scienceDept
     })
-    .Default(() => db.Classes.Add(c));
+    .Default(c => db.Classes.Add(c));
 ```
 
 ### Dictionary to Domain Model
