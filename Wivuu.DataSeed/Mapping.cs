@@ -109,8 +109,8 @@ namespace Wivuu.DataSeed
             var variables   = new List<ParameterExpression>();
             var expressions = new List<Expression>(capacity: props.Length);
             var tryGetValue = sourceType.GetMethod(nameof(IDictionary<string, object>.TryGetValue));
+            var local       = Expression.Variable(typeof(object));
 
-            var local = Expression.Variable(typeof(object));//.MakeByRefType());
             variables.Add(local);
 
             // Loop through properties and assign them one by one
