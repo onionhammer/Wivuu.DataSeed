@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24606.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.DataSeed", "Wivuu.DataSeed\Wivuu.DataSeed.csproj", "{B00A2203-7ADE-4915-9BD9-5CF79E894D44}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.Expr", "Wivuu.Expr\Wivuu.Expr.csproj", "{3E6AEABB-6C61-483D-868C-A24D8E3C6683}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,12 @@ Global
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Packaging|Any CPU.Build.0 = Packaging|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E6AEABB-6C61-483D-868C-A24D8E3C6683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6AEABB-6C61-483D-868C-A24D8E3C6683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6AEABB-6C61-483D-868C-A24D8E3C6683}.Packaging|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6AEABB-6C61-483D-868C-A24D8E3C6683}.Packaging|Any CPU.Build.0 = Release|Any CPU
+		{3E6AEABB-6C61-483D-868C-A24D8E3C6683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6AEABB-6C61-483D-868C-A24D8E3C6683}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
