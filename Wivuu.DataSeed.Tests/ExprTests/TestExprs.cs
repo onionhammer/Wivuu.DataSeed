@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Wivuu.DataSeed.Tests.ExprTests
 {
-    using System.Diagnostics;
-    using System.Linq.Expressions;
     using static Expr;
 
     [TestClass]
@@ -14,15 +13,21 @@ namespace Wivuu.DataSeed.Tests.ExprTests
         {
             using (var scope = Scope())
             {
-                var expr = Lambda<Func<int, string, string>>(
-                    param: new[] { scope.Param<int>("x"), scope.Param<string>("message") },
+                var expr = Lambda<Action<K, T>>(
+                    param: new[] { scope.Param<K>("src"), scope.Param<T>("dest") },
                     body: scope.Block(
-                        scope.Expr(() => Trace.WriteLine("Hello!" + scope.Ref("message"))),
-                        scope.Expr(() => scope.Ref("x").ToString())
+                        from destProperty in typeof(T).GetProperties()
+                        join srcProperty in typeof(K).GetProperties() 
+                            on destProperty.Name equals srcProperty.Name
+                        select Expr.Call(
+                            scope.Ref("dest"),
+                            destProperty.SetMethod,
+                            Expr.Call(scope.Ref("src"), srcProperty.GetMethod)
+                        )
                     )
                 );
 
-                var result = expr.Compile().Invoke(5, "Test");
+                expr.Compile().Invoke(source, dest);
                 return dest;
             }
         }

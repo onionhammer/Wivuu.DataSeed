@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using Wivuu.ExprUtil;
@@ -14,6 +15,9 @@ namespace Wivuu
             => Expression.Lambda<T>(body, param);
 
         public static BlockExpression Block(this Scope scope, params Expression[] expressions)
+            => Expression.Block(scope.Variables.Values, expressions);
+
+        public static BlockExpression Block(this Scope scope, IEnumerable<Expression> expressions)
             => Expression.Block(scope.Variables.Values, expressions);
 
         public static BlockExpression Block(params Expression[] expressions)
