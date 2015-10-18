@@ -14,14 +14,15 @@ namespace Wivuu.DataSeed.Tests.ExprTests
         {
             using (var scope = Scope())
             {
-                var expr = Lambda<Action<int, string>>(
+                var expr = Lambda<Func<int, string, string>>(
                     param: new[] { scope.Param<int>("x"), scope.Param<string>("message") },
                     body: scope.Block(
-                        scope.Expr(() => Trace.WriteLine("Hello!" + scope.Ref("message")))
+                        scope.Expr(() => Trace.WriteLine("Hello!" + scope.Ref("message"))),
+                        scope.Expr(() => scope.Ref("x").ToString())
                     )
                 );
 
-                expr.Compile().Invoke(5, "Test");
+                var result = expr.Compile().Invoke(5, "Test");
                 return dest;
             }
         }

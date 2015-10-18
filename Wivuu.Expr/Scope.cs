@@ -58,6 +58,7 @@ namespace Wivuu.ExprUtil
         }
 
         public Expression Expr(Expression<Action> value) => Deref(value.Body);
+        public Expression Expr<T>(Expression<Func<T>> value) => Deref(value.Body);
 
         public void Dispose()
         {
