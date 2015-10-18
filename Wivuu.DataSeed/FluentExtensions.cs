@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Wivuu.DataSeed
 {
@@ -35,6 +36,8 @@ namespace Wivuu.DataSeed
         /// </summary>
         public StateContainer<T> Update(T value)
         {
+            Contract.Requires(SourceT == null);
+
             SourceT = value;
             return this;
         }
