@@ -30,11 +30,14 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 .Default(c => db.Classes.Add(c));
 
             db.Classes.Find(physicsId)
-                .Update(new Dictionary<string, object>
+                .Update(new
                 {
-                    ["Id"]         = physicsId,
-                    ["Name"]       = "Physics 201",
-                    ["Department"] = scienceDept
+                    Id   = physicsId,
+                    Name = "Physics 201"
+                })
+                .Update(new
+                {
+                    Department = scienceDept
                 })
                 .Default(c => db.Classes.Add(c));
         }

@@ -10,42 +10,74 @@ namespace Wivuu.DataSeed
     {
         #region Properties
 
-        internal T Destination { get; set; }
+        internal T Destination { get; }
 
         internal T SourceT { get; set; }
 
-        internal Dictionary<string, object> SourceD { get; set; }
-
-        internal object Source { get; set; }
+        private HashSet<SourceMap> Sources { get; } 
+            = new HashSet<SourceMap>();
 
         #endregion
 
         #region Constructor
 
-        internal StateContainer() { }
+        internal StateContainer(T destination)
+        {
+            this.Destination = destination;
+        }
 
         #endregion
 
         #region Methods
 
         /// <summary>
+        /// Starts the process of updating a record stored in this table
+        /// </summary>
+        public StateContainer<T> Update(T value)
+        {
+            SourceT = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Starts the process of updating a record stored in this table
+        /// </summary>
+        public StateContainer<T> Update(object value)
+        {
+            Sources.Add(new SourceMap(value));
+            return this;
+        }
+
+        /// <summary>
+        /// Starts the process of updating this entity
+        /// </summary>
+        public StateContainer<T> Update(Dictionary<string, object> values)
+        {
+            Sources.Add(new SourceMap(values));
+            return this;
+        }
+
+        /// <summary>
         /// Calls callback when the entity is not found
         /// </summary>
         public T Default(Func<T> callback)
         {
-            var mapAll = false;
-            if (Destination == default(T))
+            var destination = Destination;
+            var mapAll      = false;
+
+            if (destination == default(T))
             {
-                Destination = callback();
+                destination = callback();
                 mapAll      = true;
             }
 
             if (SourceT != null)
-                return Mapping.Map(Destination, SourceT, mapAll);
-            else if (SourceD != null)
-                return Mapping.MapDictionary(Destination, SourceD);
-            else
-                return Mapping.Map(Destination, Source);
+                destination = Mapping.Map(destination, SourceT, mapAll);
+
+            foreach (var source in Sources)
+                destination = source.Map(destination);
+
+            return destination;
         }
 
         /// <summary>
@@ -53,22 +85,20 @@ namespace Wivuu.DataSeed
         /// </summary>
         public T Default(Func<T, T> callback)
         {
-            if (Destination == default(T))
+            var destination = Destination;
+
+            if (destination == default(T))
             {
                 if (SourceT != null)
-                    return callback(SourceT);
-                else if (SourceD != null)
-                    return callback(Mapping.MapDictionary(Destination, SourceD));
-                else
-                    return callback(Mapping.Map(Destination, Source));
+                    destination = callback(SourceT);
             }
+            else if (SourceT != null)
+                destination = Mapping.Map(destination, SourceT, false);
 
-            if (SourceT != null)
-                return Mapping.Map(Destination, SourceT, false);
-            else if (SourceD != null)
-                return Mapping.MapDictionary(Destination, SourceD);
-            else
-                return Mapping.Map(Destination, Source);
+            foreach (var source in Sources)
+                destination = source.Map(destination);
+
+            return destination;
         }
 
         #endregion
@@ -85,28 +115,61 @@ namespace Wivuu.DataSeed
         /// </summary>
         public static StateContainer<T> Update<T>(this T self, T value)
             where T : class, new()
-            => new StateContainer<T> { Destination = self, SourceT = value };
+            => new StateContainer<T>(self).Update(value);
 
         /// <summary>
         /// Starts the process of updating a record stored in this table
         /// </summary>
         public static StateContainer<T> Update<T>(this T self, object value)
             where T : class, new()
-            => new StateContainer<T> { Destination = self, Source = value };
+            => new StateContainer<T>(self).Update(value);
 
         /// <summary>
         /// Starts the process of updating this entity
         /// </summary>
         public static StateContainer<T> Update<T>(this T self, Dictionary<string, object> values)
             where T : class, new()
-            => new StateContainer<T> { Destination = self, SourceD = values };
+            => new StateContainer<T>(self).Update(values);
 
         /// <summary>
         /// Starts the process of updating a record stored in this table
         /// </summary>
         public static T Default<T>(this T self, Func<T> callback)
             where T : class, new()
-            => new StateContainer<T> { Destination = self }.Default(callback);
+            => new StateContainer<T>(self).Default(callback);
+    }
+
+    #endregion
+
+    #region Source Mapping Container
+
+    public struct SourceMap
+    {
+        private Dictionary<string, object> SourceD { get; }
+
+        private object Source { get; }
+
+        public SourceMap(Dictionary<string, object> source)
+        {
+            SourceD = source;
+            Source  = null;
+        }
+
+        public SourceMap(object source)
+        {
+            SourceD = null;
+            Source  = source;
+        }
+
+        public T Map<T>(T destination) where T : class, new()
+            => SourceD != null 
+             ? Mapping.MapDictionary(destination, SourceD)
+             : Mapping.Map(destination, Source);
+
+        public override int GetHashCode()
+            => SourceD != null
+             ? SourceD.GetHashCode()
+             : Source.GetHashCode();
     }
 
     #endregion
