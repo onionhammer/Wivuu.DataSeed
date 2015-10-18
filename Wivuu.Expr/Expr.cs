@@ -23,16 +23,16 @@ namespace Wivuu
         public static BlockExpression Block(params Expression[] expressions)
             => Expression.Block(expressions);
 
-        public static MethodCallExpression Call(this Expression self, MethodInfo method, params Expression[] arguments)
+        public static MethodCallExpression Invoke(this Expression self, MethodInfo method, params Expression[] arguments)
             => Expression.Call(self, method, arguments);
 
-        public static MethodCallExpression Call<T>(this Expression self, MethodInfo method, Expression<T> expr)
+        public static MethodCallExpression Invoke<T>(this Expression self, MethodInfo method, Expression<T> expr)
             => Expression.Call(self, method, expr);
 
-        public static MethodCallExpression Call<T>(this MethodInfo method, Expression<T> expr)
+        public static MethodCallExpression Invoke<T>(this MethodInfo method, Expression<T> expr)
             => Expression.Call(method, expr);
 
-        public static MethodCallExpression Call(this MethodInfo cb, params Expression[] arguments)
+        public static MethodCallExpression Invoke(this MethodInfo cb, params Expression[] arguments)
             => Expression.Call(cb, arguments);
 
         public static MethodInfo Method<T>(string name)

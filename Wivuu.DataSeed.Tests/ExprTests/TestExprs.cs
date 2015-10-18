@@ -19,10 +19,9 @@ namespace Wivuu.DataSeed.Tests.ExprTests
                         from destProperty in typeof(T).GetProperties()
                         join srcProperty in typeof(K).GetProperties() 
                             on destProperty.Name equals srcProperty.Name
-                        select Expr.Call(
-                            scope.Ref("dest"),
+                        select scope.Ref("dest").Invoke(
                             destProperty.SetMethod,
-                            Expr.Call(scope.Ref("src"), srcProperty.GetMethod)
+                            scope.Ref("src").Invoke(srcProperty.GetMethod)
                         )
                     )
                 );
