@@ -64,6 +64,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -86,12 +87,17 @@
     <Compile Include="Domain\Class.cs" />
     <Compile Include="Domain\DataSeedTestContext.cs" />
     <Compile Include="Domain\Department.cs" />
+    <Compile Include="Domain\ImmutableEntity.cs" />
     <Compile Include="Domain\School.cs" />
     <Compile Include="Domain\Student.cs" />
     <Compile Include="ExprTests\TestExprs.cs" />
     <Compile Include="Migrations\201509052342349_db setup.cs" />
     <Compile Include="Migrations\201509052342349_db setup.Designer.cs">
       <DependentUpon>201509052342349_db setup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603250409409_protected sample.cs" />
+    <Compile Include="Migrations\201603250409409_protected sample.Designer.cs">
+      <DependentUpon>201603250409409_protected sample.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +121,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201509052342349_db setup.resx">
       <DependentUpon>201509052342349_db setup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250409409_protected sample.resx">
+      <DependentUpon>201603250409409_protected sample.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

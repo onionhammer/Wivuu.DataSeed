@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Wivuu.DataSeed.Tests.Domain
 {
@@ -35,5 +31,7 @@ namespace Wivuu.DataSeed.Tests.Domain
         public DbSet<Student> Students { get; set; }
 
         public DbSet<Department> Departments { get; set; }
+
+        public DbSet<ProtectedEntity> Protected { get; set; }
     }
 }
