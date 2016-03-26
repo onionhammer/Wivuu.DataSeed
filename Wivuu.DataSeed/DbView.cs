@@ -8,38 +8,55 @@ using Wivuu.DataSeed;
 
 namespace Wivuu.DataSeed
 {
-    public class DbView<T>
+    internal class DbViewVisitor<K> : ExpressionVisitor
+        where K : DbContext
     {
-        private readonly Func<ObjectContext, IQueryable<T>> Query;
+        private readonly Expression Swap;
 
-        protected DbView(Expression<Func<ObjectContext, IQueryable<T>>> query)
+        public DbViewVisitor(K context)
         {
-            this.Query = CompiledQuery.Compile(query);
+            Expression<Func<K>> param = () => context;
+
+            this.Swap = param.Body as MemberExpression;
         }
 
-        public static DbView<T> AsView<K>(Expression<Func<K, IQueryable<T>>> query)
-            where K : DbContext
+        public override Expression Visit(Expression node)
         {
-            //var param = Expression.Parameter(typeof(ObjectContext));
-            var param = query.Parameters.FirstOrDefault();
+            switch (node?.NodeType)
+            {
+                case ExpressionType.MemberAccess:
+                    var memberNode = node as MemberExpression;
+                    if (memberNode.Expression.Type == typeof(K))
+                        return Expression.MakeMemberAccess(Swap, memberNode.Member);
+                    else
+                        return base.Visit(node);
 
-            var resultExpr = Expression.Lambda<Func<ObjectContext, IQueryable<T>>>(
-                query.Body,
-                param
-            );
+                default:
+                    return base.Visit(node);
+            }
+        }
+    }
 
-            return new DbView<T>(resultExpr);
+    public class DbView<K, T>
+        where K : DbContext
+    {
+        private readonly Expression<Func<ObjectContext, K, IQueryable<T>>> Expression;
+
+        public DbView(Expression<Func<ObjectContext, K, IQueryable<T>>> query)
+        {
+            this.Expression = query;
         }
 
-        public static DbView<T> AsView(Expression<Func<ObjectContext, IQueryable<T>>> query) =>
-            new DbView<T>(query);
-
-        public IQueryable<T> From<K>(K db)
-            where K : DbContext
+        public IQueryable<T> From(K db)
         {
+            var transform = new DbViewVisitor<K>(db).Visit(Expression) as
+                Expression<Func<ObjectContext, K, IQueryable<T>>>;
+
+            var query   = CompiledQuery.Compile(transform);
             var adapter = db as IObjectContextAdapter;
+
             db.Configuration.ProxyCreationEnabled = false;
-            return this.Query.Invoke(adapter.ObjectContext);
+            return query.Invoke(adapter.ObjectContext, db);
         }
     }
 }
@@ -48,11 +65,8 @@ namespace System.Data.Entity
 {
     public static class DbView
     {
-        public static DbView<T> New<K,T>(this Expression<Func<K, IQueryable<T>>> query)
-            where K : DbContext => 
-            DbView<T>.AsView(query);
-
-        public static DbView<T> AsView<T>(this Expression<Func<ObjectContext, IQueryable<T>>> query) => 
-            DbView<T>.AsView(query);
+        public static DbView<K, T> AsView<K, T>(this Expression<Func<ObjectContext, K, IQueryable<T>>> query)
+            where K : DbContext =>
+            new DbView<K, T>(query);
     }
 }

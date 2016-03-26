@@ -75,8 +75,8 @@ namespace Wivuu.DataSeed.Tests
         [TestMethod]
         public async Task TestViews()
         {
-            var view = DbView.AsView(ctx =>
-                from i in Db.Departments
+            var view = DbView.AsView<DataSeedTestContext, Department>((ctx,db) =>
+                from i in db.Departments
                 select i
             );
 
@@ -90,20 +90,18 @@ namespace Wivuu.DataSeed.Tests
     [TestClass]
     public class TestUOW
     {
-        private DbView<Department> Departments;
+        private DbView<DataSeedTestContext, Department> Departments;
 
         [TestInitialize]
         public void Setup()
         {
-            using (var db = new DataSeedTestContext())
-                Departments = DbView.AsView(ctx =>
-                    from i in db.Departments
-                    select i
-                );
+            Departments = new DbView<DataSeedTestContext, Department>(
+                (ctx, db) => db.Departments.AsQueryable()
+            );
         }
 
         [TestMethod]
-        public async Task TestViews()
+        public async Task TestViews2()
         {
             using (var db = new DataSeedTestContext())
             {
