@@ -71,5 +71,44 @@ namespace Wivuu.DataSeed.Tests
             Assert.AreEqual(extEnt.Age, 15);
             await Db.SaveChangesAsync();
         }
+
+        [TestMethod]
+        public async Task TestViews()
+        {
+            var view = DbView.AsView(ctx =>
+                from i in Db.Departments
+                select i
+            );
+
+            //var view = DbView.New<DataSeedTestContext, Department>(
+            //db => db.Departments);
+
+            var all = await view.From(Db).ToListAsync();
+        }
+    }
+
+    [TestClass]
+    public class TestUOW
+    {
+        private DbView<Department> Departments;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            using (var db = new DataSeedTestContext())
+                Departments = DbView.AsView(ctx =>
+                    from i in db.Departments
+                    select i
+                );
+        }
+
+        [TestMethod]
+        public async Task TestViews()
+        {
+            using (var db = new DataSeedTestContext())
+            {
+                var all = await Departments.From(db).ToListAsync();
+            }
+        }
     }
 }

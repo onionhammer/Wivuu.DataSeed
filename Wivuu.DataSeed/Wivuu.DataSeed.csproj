@@ -70,6 +70,7 @@
     <Compile Include="DataMigration.cs" />
     <Compile Include="DataMigrationHistory.cs" />
     <Compile Include="DbEntityExtensions.cs" />
+    <Compile Include="DbView.cs" />
     <Compile Include="ILSerializer.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
