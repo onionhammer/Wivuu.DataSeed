@@ -16,16 +16,16 @@ namespace Wivuu.DataSeed
 
         protected IDbAsyncEnumerable<T> AsyncQuery { get; }
 
-        public DbViewBuilder<K> Builder { get; }
+        protected DbViewBuilder<K> Builder { get; }
 
         public DbView(DbViewBuilder<K> builder, Func<K, IQueryable<T>> query)
         {
-            this.Builder    = builder;
-            this.Query      = query(builder.Db);
-            this.AsyncQuery = this.Query as IDbAsyncEnumerable<T>;
+            Builder    = builder;
+            Query      = query(builder.Db);
+            AsyncQuery = Query as IDbAsyncEnumerable<T>;
         }
 
-        #region IQueryable<T> & IDbAsyncEnumerable<T> Implementations
+        #region IQueryable<T> & IDbAsyncEnumerable<T>
 
         public Expression Expression 
             => Query.Expression;
