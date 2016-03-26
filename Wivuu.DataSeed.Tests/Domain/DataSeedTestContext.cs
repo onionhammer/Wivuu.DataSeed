@@ -5,6 +5,9 @@ namespace Wivuu.DataSeed.Tests.Domain
 {
     public class DataSeedTestContext : SeededDbContext
     {
+        public DataSeedTestContext() { }
+        public DataSeedTestContext(DbConnection conn): base(conn, false) { }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Set up Student <-> Class relationship

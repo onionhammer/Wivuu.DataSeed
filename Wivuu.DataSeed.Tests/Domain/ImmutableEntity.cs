@@ -12,7 +12,7 @@ namespace Wivuu.DataSeed.Tests.Domain
 
         public string Name { get; protected set; }
 
-        public int Age { get; set; }
+        public int Age { get; protected set; }
 
         public ProtectedEntity(int id, string name = "", int age = 0)
         {

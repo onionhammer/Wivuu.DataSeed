@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,65 +9,101 @@ using Wivuu.DataSeed;
 
 namespace Wivuu.DataSeed
 {
-    internal class DbViewVisitor<K> : ExpressionVisitor
-        where K : DbContext
+    public class DbView<K, T> : IQueryable<T>, IDbAsyncEnumerable<T>
+        where K : DbContext, new()
     {
-        private readonly Expression Swap;
+        protected IQueryable<T> Query { get; }
 
-        public DbViewVisitor(K context)
+        protected IDbAsyncEnumerable<T> AsyncQuery { get; }
+
+        public DbViewBuilder<K> Builder { get; }
+
+        public DbView(DbViewBuilder<K> builder, Func<K, IQueryable<T>> query)
         {
-            Expression<Func<K>> param = () => context;
-
-            this.Swap = param.Body as MemberExpression;
+            this.Builder    = builder;
+            this.Query      = query(builder.Db);
+            this.AsyncQuery = this.Query as IDbAsyncEnumerable<T>;
         }
 
-        public override Expression Visit(Expression node)
-        {
-            switch (node?.NodeType)
-            {
-                case ExpressionType.MemberAccess:
-                    var memberNode = node as MemberExpression;
-                    if (memberNode.Expression.Type == typeof(K))
-                        return Expression.MakeMemberAccess(Swap, memberNode.Member);
-                    else
-                        return base.Visit(node);
+        #region IQueryable<T> & IDbAsyncEnumerable<T> Implementations
 
-                default:
-                    return base.Visit(node);
-            }
-        }
+        public Expression Expression 
+            => Query.Expression;
+
+        public Type ElementType 
+            => Query.ElementType;
+
+        public IQueryProvider Provider 
+            => Query.Provider;
+
+        public IEnumerator<T> GetEnumerator() 
+            => Query.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() 
+            => Query.GetEnumerator();
+
+        public IDbAsyncEnumerator<T> GetAsyncEnumerator() 
+            => AsyncQuery.GetAsyncEnumerator();
+
+        IDbAsyncEnumerator IDbAsyncEnumerable.GetAsyncEnumerator() 
+            => AsyncQuery.GetAsyncEnumerator();
+
+        #endregion
     }
 
-    public class DbView<K, T>
-        where K : DbContext
+    public class DbViewBuilder<K> : IDisposable
+        where K : DbContext, new()
     {
-        private readonly Expression<Func<ObjectContext, K, IQueryable<T>>> Expression;
+        internal K Db { get; }
 
-        public DbView(Expression<Func<ObjectContext, K, IQueryable<T>>> query)
+        internal DbViewBuilder(K db)
         {
-            this.Expression = query;
-        }
-
-        public IQueryable<T> From(K db)
-        {
-            var transform = new DbViewVisitor<K>(db).Visit(Expression) as
-                Expression<Func<ObjectContext, K, IQueryable<T>>>;
-
-            var query   = CompiledQuery.Compile(transform);
-            var adapter = db as IObjectContextAdapter;
-
+            // Views should not be updatable - do not track changes
             db.Configuration.ProxyCreationEnabled = false;
-            return query.Invoke(adapter.ObjectContext, db);
+
+            this.Db = db;
         }
+
+        /// <summary>
+        /// Generate a view from the input query
+        /// </summary>
+        public DbView<K, T> View<T>(Func<K, IQueryable<T>> query) =>
+            new DbView<K, T>(this, query);
+
+        #region Resouce Management
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+                Db.Dispose();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~DbViewBuilder()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }
 
 namespace System.Data.Entity
 {
-    public static class DbView
+    public static class DbViewBuilder
     {
-        public static DbView<K, T> AsView<K, T>(this Expression<Func<ObjectContext, K, IQueryable<T>>> query)
-            where K : DbContext =>
-            new DbView<K, T>(query);
+        /// <summary>
+        /// Creates a new DbViewBuilder which is a factory for stored
+        /// queries of unbound objects. Lazy loading and proxy generation
+        /// is disabled by default
+        /// </summary>
+        public static DbViewBuilder<K> ViewBuilder<K>(this K db)
+            where K : DbContext, new() =>
+            new DbViewBuilder<K>(db);
     }
 }

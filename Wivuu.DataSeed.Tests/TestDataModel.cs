@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wivuu.DataSeed.Tests.Domain;
@@ -37,76 +36,6 @@ namespace Wivuu.DataSeed.Tests
             var numMigrations = types.Count();
 
             Assert.AreEqual(numMigrations, results.Count);
-        }
-
-        [TestMethod]
-        public async Task TestImmEntity()
-        {
-            var newEnt = new ProtectedEntity(1, "Sam");
-
-            Db.Protected.Add(newEnt);
-            await Db.SaveChangesAsync();
-
-            // Not editable
-            //newEnt.Name = "Craig";
-
-            var extEnt = await Db.Protected
-                .FirstOrDefaultAsync(p => p.Name == "Sam");
-            Assert.IsNotNull(extEnt);
-            Assert.AreEqual(extEnt.Age, 0);
-
-            // Still not editable
-            //extEnt.Name = "Craig";
-
-            // Update entity (purposefully!)
-            Db.UpdateSet(extEnt)
-                .Set(e => e.Name, "Craig")
-                .Set(e => e.Age, 15);
-            await Db.SaveChangesAsync();
-
-            extEnt = await Db.Protected
-                .FirstOrDefaultAsync(p => p.Name == "Craig");
-
-            Assert.IsNotNull(extEnt, "Unable to change entity");
-            Assert.AreEqual(extEnt.Age, 15);
-            await Db.SaveChangesAsync();
-        }
-
-        [TestMethod]
-        public async Task TestViews()
-        {
-            var view = DbView.AsView<DataSeedTestContext, Department>((ctx,db) =>
-                from i in db.Departments
-                select i
-            );
-
-            //var view = DbView.New<DataSeedTestContext, Department>(
-            //db => db.Departments);
-
-            var all = await view.From(Db).ToListAsync();
-        }
-    }
-
-    [TestClass]
-    public class TestUOW
-    {
-        private DbView<DataSeedTestContext, Department> Departments;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            Departments = new DbView<DataSeedTestContext, Department>(
-                (ctx, db) => db.Departments.AsQueryable()
-            );
-        }
-
-        [TestMethod]
-        public async Task TestViews2()
-        {
-            using (var db = new DataSeedTestContext())
-            {
-                var all = await Departments.From(db).ToListAsync();
-            }
         }
     }
 }

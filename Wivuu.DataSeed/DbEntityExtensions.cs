@@ -22,7 +22,16 @@ namespace Wivuu.DataSeed
         /// </summary>
         public UpdateSet<T> Set<K>(Expression<Func<T, K>> change, K value)
         {
-            Db.Entry(Entity).Property(change).CurrentValue = value;
+            var entry = Db.Entry(Entity);
+
+            if (entry.State == EntityState.Detached)
+                Db.Set<T>().Attach(Entity);
+
+            var prop = entry.Property(change);
+
+            prop.CurrentValue = value;
+            prop.IsModified   = true;
+
             return this;
         }
     }

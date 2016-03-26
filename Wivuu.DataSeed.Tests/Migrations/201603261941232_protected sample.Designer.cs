@@ -13,7 +13,7 @@ namespace Wivuu.DataSeed.Tests.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603250409409_protected sample"; }
+            get { return "201603261941232_protected sample"; }
         }
         
         string IMigrationMetadata.Source
