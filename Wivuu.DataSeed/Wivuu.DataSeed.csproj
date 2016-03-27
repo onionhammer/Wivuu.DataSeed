@@ -69,7 +69,7 @@
   <ItemGroup>
     <Compile Include="DataMigration.cs" />
     <Compile Include="DataMigrationHistory.cs" />
-    <Compile Include="DbEntityExtensions.cs" />
+    <Compile Include="ProtectedEntityExtensions.cs" />
     <Compile Include="DbViewExtensions.cs" />
     <Compile Include="ILSerializer.cs" />
     <Compile Include="Mapping.cs" />

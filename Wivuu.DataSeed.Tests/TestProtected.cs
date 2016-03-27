@@ -34,9 +34,8 @@ namespace Wivuu.DataSeed.Tests
             using (var db = new DataSeedTestContext(Db.Database.Connection))
             {
                 db.Database.UseTransaction(Db.Database.CurrentTransaction.UnderlyingTransaction);
-                var newEnt = new ProtectedEntity(1, "Sam");
+                var newEnt = db.New(new ProtectedEntity(1, "Sam"));
 
-                db.Protected.Add(newEnt);
                 await db.SaveChangesAsync();
 
                 // Not editable
@@ -57,9 +56,9 @@ namespace Wivuu.DataSeed.Tests
                 db.Database.UseTransaction(Db.Database.CurrentTransaction.UnderlyingTransaction);
 
                 // Update entity
-                db.UpdateSet(extEnt)
-                    .Set(e => e.Name, "Craig")
-                    .Set(e => e.Age, 15);
+                db.Set(extEnt, e => e.Name, "Craig")
+                  .Set(e => e.Age, 15);
+
                 await db.SaveChangesAsync();
 
                 extEnt = await ProtectedEntities
