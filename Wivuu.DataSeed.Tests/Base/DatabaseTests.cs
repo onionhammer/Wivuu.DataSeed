@@ -20,9 +20,9 @@ namespace Wivuu.DataSeed.Tests
     {
         #region Properties
 
-        protected DataSeedTestContext Db { get; set; }
+        internal DataSeedTestContext Db { get; set; }
 
-        protected DbContextTransaction Transaction { get; set; }
+        internal DbContextTransaction Transaction { get; set; }
 
         #endregion
 

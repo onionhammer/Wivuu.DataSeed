@@ -3,7 +3,7 @@ using Wivuu.DataSeed.Tests.Domain;
 
 namespace Wivuu.DataSeed.Tests.DataMigrations
 {
-    public class AddSchools : DataMigration<DataSeedTestContext>
+    internal class AddSchools : DataMigration<DataSeedTestContext>
     {
         public override int Order => 0;
 

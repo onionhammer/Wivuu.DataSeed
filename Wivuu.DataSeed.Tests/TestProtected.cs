@@ -9,7 +9,6 @@ namespace Wivuu.DataSeed.Tests
     [TestClass]
     public class TestProtected : DatabaseTests
     {
-        private DbView<DataSeedTestContext, Department> ScienceDept;
         private DbView<DataSeedTestContext, ProtectedEntity> ProtectedEntities;
 
         public override void TestSetup()
@@ -17,12 +16,6 @@ namespace Wivuu.DataSeed.Tests
             var testDb = new DataSeedTestContext(Db.Database.Connection);
             testDb.Database.UseTransaction(Db.Database.CurrentTransaction.UnderlyingTransaction);
             var builder = testDb.ViewBuilder();
-
-            ScienceDept = builder.View(db =>
-                from d in db.Departments.Include(d => d.School)
-                where d.Name == "Science"
-                select d
-            );
 
             ProtectedEntities = builder.View(db => db.Protected);
         }

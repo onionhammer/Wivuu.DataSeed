@@ -25,6 +25,12 @@ namespace Wivuu.DataSeed
             AsyncQuery = Query as IDbAsyncEnumerable<T>;
         }
 
+        /// <summary>
+        /// Create new view of this view
+        /// </summary>
+        public DbView<K, U> View<U>(Func<DbView<K, T>, IQueryable<U>> query) =>
+            new DbView<K, U>(Builder, db => query(this));
+
         #region IQueryable<T> & IDbAsyncEnumerable<T>
 
         public Expression Expression 

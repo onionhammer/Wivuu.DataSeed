@@ -1,9 +1,10 @@
 ﻿using System.Data.Common;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Wivuu.DataSeed.Tests.Domain
 {
-    public class DataSeedTestContext : SeededDbContext
+    internal class DataSeedTestContext : SeededDbContext
     {
         public DataSeedTestContext() { }
         public DataSeedTestContext(DbConnection conn): base(conn, false) { }

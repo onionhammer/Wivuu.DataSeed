@@ -4,7 +4,7 @@ using Wivuu.DataSeed.Tests.Domain;
 
 namespace Wivuu.DataSeed.Tests.DataMigrations
 {
-    public class AddClasses : DataMigration<DataSeedTestContext>
+    internal class AddClasses : DataMigration<DataSeedTestContext>
     {
         public override bool AlwaysRun => true;
 
