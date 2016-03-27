@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Wivuu.DataSeed.Tests.Domain
 {
-    internal class DataSeedTestContext : SeededDbContext
+    public class DataSeedTestContext : SeededDbContext
     {
         public DataSeedTestContext() { }
         public DataSeedTestContext(DbConnection conn): base(conn, false) { }

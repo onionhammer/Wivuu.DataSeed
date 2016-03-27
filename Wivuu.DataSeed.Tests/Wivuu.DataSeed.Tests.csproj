@@ -85,6 +85,7 @@
     <Compile Include="DataMigrations\AddDepartments.cs" />
     <Compile Include="DataMigrations\AddSchools.cs" />
     <Compile Include="Domain\Class.cs" />
+    <Compile Include="Domain\DataSeedViews.cs" />
     <Compile Include="Domain\DataSeedTestContext.cs" />
     <Compile Include="Domain\Department.cs" />
     <Compile Include="Domain\ImmutableEntity.cs" />

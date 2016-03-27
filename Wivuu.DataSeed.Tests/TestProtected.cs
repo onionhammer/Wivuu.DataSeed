@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -60,6 +62,31 @@ namespace Wivuu.DataSeed.Tests
                 Assert.IsNotNull(extEnt, "Unable to change entity");
                 Assert.AreEqual(extEnt.Age, 15);
                 await db.SaveChangesAsync();
+            }
+        }
+
+        [TestMethod]
+        public async Task TestViews()
+        {
+            using (var dbv = new DataSeedViews(Db))
+            {
+                // Create student
+                var scienceDept = await dbv.ScienceDept.FirstOrDefaultAsync();
+                var @class      = await dbv.Classes.Where(c => c.DepartmentId == scienceDept.Id).FirstOrDefaultAsync();
+
+                var craig = Db.New(new Student
+                {
+                    Id        = Guid.NewGuid(),
+                    FirstName = "Craig",
+                    LastName  = "Harvey",
+                    Classes   = new List<Class> { @class }
+                });
+
+                await Db.SaveChangesAsync();
+
+                // Retrieve student
+                var scienceStudents = await dbv.ScienceStudents.ToListAsync();
+                Assert.IsTrue(scienceStudents.Any(c => c.Id == craig.Id));
             }
         }
     }
