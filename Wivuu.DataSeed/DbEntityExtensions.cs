@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq.Expressions;
 using Wivuu.DataSeed;
 
@@ -9,12 +10,15 @@ namespace Wivuu.DataSeed
         where T : class
     {
         private readonly DbContext Db;
-        private readonly T Entity;
+        private readonly DbEntityEntry<T> Entry;
 
         internal UpdateSet(DbContext db, T entity)
         {
-            this.Db = db;
-            this.Entity = entity;
+            this.Db    = db;
+            this.Entry = Db.Entry(entity);
+
+            if (Entry.State == EntityState.Detached)
+                Db.Set<T>().Attach(entity);
         }
 
         /// <summary>
@@ -22,12 +26,7 @@ namespace Wivuu.DataSeed
         /// </summary>
         public UpdateSet<T> Set<K>(Expression<Func<T, K>> change, K value)
         {
-            var entry = Db.Entry(Entity);
-
-            if (entry.State == EntityState.Detached)
-                Db.Set<T>().Attach(Entity);
-
-            var prop = entry.Property(change);
+            var prop = Entry.Property(change);
 
             prop.CurrentValue = value;
             prop.IsModified   = true;
