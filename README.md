@@ -55,10 +55,7 @@ public class AddClasses : DataMigration<MyDbContext>
         });
     }
 
-    public override int Order
-    {
-        get { return 1; }
-    }
+    public override int Order => 1;
 }
 ```
 
@@ -122,10 +119,7 @@ a `Cleanup` method. An example where you might use this is if you are seeding
 a database table with an XML or JSON file that's stored in your project.
 
 ```C#
-public override bool AlwaysRun
-{
-    get { return true; }
-}
+public override bool AlwaysRun => true;
 ```
 
 ## Cleanup
