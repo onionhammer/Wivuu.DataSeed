@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Wivuu.ExprUtils;
 
 namespace Wivuu.DataSeed
 {
+    [Obsolete("Mapping will be replaced with strictly typed compiled mappings")]
     public static class Mapping
     {
         private static Dictionary<Tuple<Type, bool>, object> _selfMappers

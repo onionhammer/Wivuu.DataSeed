@@ -69,15 +69,14 @@
   <ItemGroup>
     <Compile Include="DataMigration.cs" />
     <Compile Include="DataMigrationHistory.cs" />
+    <Compile Include="FluentExtensions.cs" />
     <Compile Include="ProtectedEntityExtensions.cs" />
     <Compile Include="DbViewExtensions.cs" />
-    <Compile Include="ILSerializer.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="SeededDbContext.cs" />
     <Compile Include="SeedManagerExtensions.cs" />
-    <Compile Include="FluentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

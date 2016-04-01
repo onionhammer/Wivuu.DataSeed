@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Wivuu.Expr;
 
 namespace Wivuu.DataSeed.Tests.ExprTests
 {
-    using static Expr;
 
     [TestClass]
     public class TestExprs

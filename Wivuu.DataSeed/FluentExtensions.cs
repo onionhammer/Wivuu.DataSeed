@@ -6,6 +6,7 @@ namespace Wivuu.DataSeed
 {
     #region State Machine
 
+    [Obsolete("StateContainer will be replaced with strictly typed compiled mappings")]
     public class StateContainer<T>
         where T : class, new()
     {
@@ -39,15 +40,6 @@ namespace Wivuu.DataSeed
             Contract.Requires(SourceT == null);
 
             SourceT = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Starts the process of updating a record stored in this table
-        /// </summary>
-        public StateContainer<T> Update(object value)
-        {
-            Sources.Add(new SourceMap(value));
             return this;
         }
 
@@ -111,19 +103,13 @@ namespace Wivuu.DataSeed
 
     #region Fluent Interface
 
+    [Obsolete("FluentExtensions will be replaced with strictly typed compiled mappings")]
     public static class FluentExtensions
     {
         /// <summary>
         /// Starts the process of updating a record stored in this table
         /// </summary>
         public static StateContainer<T> Update<T>(this T self, T value)
-            where T : class, new()
-            => new StateContainer<T>(self).Update(value);
-
-        /// <summary>
-        /// Starts the process of updating a record stored in this table
-        /// </summary>
-        public static StateContainer<T> Update<T>(this T self, object value)
             where T : class, new()
             => new StateContainer<T>(self).Update(value);
 
@@ -146,6 +132,7 @@ namespace Wivuu.DataSeed
 
     #region Source Mapping Container
 
+    [Obsolete("SourceMap will be replaced with strictly typed compiled mappings")]
     public struct SourceMap
     {
         private Dictionary<string, object> SourceD { get; }

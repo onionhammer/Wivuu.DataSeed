@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Wivuu.DataSeed
+namespace Wivuu.ExprUtils
 {
     public static class ILSerializer
     {

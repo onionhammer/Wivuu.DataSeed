@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Wivuu.DataSeed.Tests.Domain;
 
@@ -29,14 +30,11 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 .Default(c => db.Classes.Add(c));
 
             db.Classes.Find(physicsId)
-                .Update(new
+                .Update(new Dictionary<string, object>
                 {
-                    Id   = physicsId,
-                    Name = "Physics 201"
-                })
-                .Update(new
-                {
-                    Department = scienceDept
+                    ["Id"]         = physicsId,
+                    ["Name"]       = "Physics 201",
+                    ["Department"] = scienceDept
                 })
                 .Default(c => db.Classes.Add(c));
         }
