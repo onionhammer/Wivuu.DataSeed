@@ -103,6 +103,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\DatabaseTests.cs" />
+    <Compile Include="TestUpdateEntities.cs" />
     <Compile Include="TestProtected.cs" />
     <Compile Include="TestDataModel.cs" />
   </ItemGroup>

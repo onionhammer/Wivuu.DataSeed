@@ -44,6 +44,15 @@ namespace Wivuu.DataSeed
         }
 
         /// <summary>
+        /// Starts the process of updating a record stored in this table
+        /// </summary>
+        public StateContainer<T> Update(object value)
+        {
+            Sources.Add(new SourceMap(value));
+            return this;
+        }
+
+        /// <summary>
         /// Starts the process of updating this entity
         /// </summary>
         public StateContainer<T> Update(Dictionary<string, object> values)
@@ -84,8 +93,11 @@ namespace Wivuu.DataSeed
 
             if (destination == default(T))
             {
-                if (SourceT != null)
-                    destination = callback(SourceT);
+                var source = SourceT;
+                if (source == null)
+                    source = new T();
+
+                destination = callback(source);
             }
             else if (SourceT != null)
                 destination = Mapping.Map(destination, SourceT, false);
@@ -110,6 +122,13 @@ namespace Wivuu.DataSeed
         /// Starts the process of updating a record stored in this table
         /// </summary>
         public static StateContainer<T> Update<T>(this T self, T value)
+            where T : class, new()
+            => new StateContainer<T>(self).Update(value);
+
+        /// <summary>
+        /// Starts the process of updating a record stored in this table
+        /// </summary>
+        public static StateContainer<T> Update<T>(this T self, object value)
             where T : class, new()
             => new StateContainer<T>(self).Update(value);
 

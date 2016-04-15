@@ -5,7 +5,6 @@ using static Wivuu.Expr;
 
 namespace Wivuu.DataSeed.Tests.ExprTests
 {
-
     [TestClass]
     public class TestExprs
     {
@@ -45,7 +44,6 @@ namespace Wivuu.DataSeed.Tests.ExprTests
             Assert.AreEqual(a.Item1, b.Item1);
             Assert.AreEqual(a.Item2, b.Item2);
         }
-
     }
 
     class Record
