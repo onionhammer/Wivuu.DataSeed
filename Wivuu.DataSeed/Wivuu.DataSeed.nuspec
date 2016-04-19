@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>$id$</id>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
     <title>$title$</title>
     <authors>Erik O'Leary</authors>
     <owners>Erik O'Leary</owners>
@@ -17,4 +17,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>EntityFramework data model</tags>
   </metadata>
+  <files>
+    <file src="bin\Debug\Wivuu.Expr.dll" target="lib\net46" />
+  </files>
 </package>
