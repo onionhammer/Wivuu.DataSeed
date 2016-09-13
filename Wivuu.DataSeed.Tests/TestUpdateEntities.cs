@@ -27,27 +27,26 @@ namespace Wivuu.DataSeed.Tests
                 Name = "John Smith"
             };
 
-            var updated0 = item0.Update(
-                new { Name = "Craig Smith" }
-            ).Default(() => new TestUser
-            {
-                Id   = item0.Id,
-                Name = "Craig Smith"
-            });
+            var updated0 = item0
+                .Update(new { Name = "Craig Smith" })
+                .Default(() => new TestUser
+                {
+                    Id   = item0.Id,
+                    Name = "Craig Smith"
+                });
 
             Assert.AreEqual("Craig Smith", updated0.Name);
 
             // Scenario 2
             var item1 = default(TestUser);
 
-            var updated1 = item1.Update(
-                new { Name = "Craig Smith" }
-            )
-            .Default(c => 
-            {
-                c.Id = item0.Id;
-                return c;
-            });
+            var updated1 = item1
+                .Update(new { Name = "Craig Smith" })
+                .Default(c => 
+                {
+                    c.Id = item0.Id;
+                    return c;
+                });
 
             Assert.AreEqual("Craig Smith", updated1.Name);
 
@@ -65,7 +64,6 @@ namespace Wivuu.DataSeed.Tests
                 });
 
             Assert.AreEqual("Jim Smith", updated2.Name);
-
         }
     }
 }

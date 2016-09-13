@@ -2,15 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>$id$</id>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <title>$title$</title>
     <authors>Erik O'Leary</authors>
     <owners>Erik O'Leary</owners>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      DataSeed helps you manage the data that gets pre-filled in 
-      your database when using EntityFramework's code-first model.
+      DataSeed helps you manage the data that gets pre-filled in your database when using EntityFramework's code-first model.
     </description>
     <projectUrl>https://github.com/onionhammer/dataseed</projectUrl>
     <releaseNotes>Initial Release</releaseNotes>

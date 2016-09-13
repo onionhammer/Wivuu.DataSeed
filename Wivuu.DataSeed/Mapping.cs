@@ -10,8 +10,8 @@ namespace Wivuu.DataSeed
     [Obsolete("Mapping will be replaced with strictly typed compiled mappings")]
     public static class Mapping
     {
-        private static Dictionary<Tuple<Type, bool>, object> _selfMappers
-            = new Dictionary<Tuple<Type, bool>, object>();
+        private static Dictionary<StructTuple<Type, bool>, object> _selfMappers
+            = new Dictionary<StructTuple<Type, bool>, object>();
 
         private static Dictionary<Type, object> _dictMappers
             = new Dictionary<Type, object>();
@@ -27,7 +27,7 @@ namespace Wivuu.DataSeed
             if (destination == null)
                 destination = new T();
 
-            var key = Tuple.Create(type, mapAll);
+            var key = StructTuple.Create(type, mapAll);
 
             object mappingBox;
             Action<T, T> mapping;
@@ -55,7 +55,7 @@ namespace Wivuu.DataSeed
             if (destination == null)
                 destination = new T();
 
-            var key = Tuple.Create(type, true);
+            var key = StructTuple.Create(type, true);
 
             object mappingBox;
             Action<T, object> mapping;

@@ -50,8 +50,8 @@
     <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.1.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -88,7 +88,7 @@
     <Compile Include="Domain\DataSeedViews.cs" />
     <Compile Include="Domain\DataSeedTestContext.cs" />
     <Compile Include="Domain\Department.cs" />
-    <Compile Include="Domain\ImmutableEntity.cs" />
+    <Compile Include="Domain\ProtectedEntity.cs" />
     <Compile Include="Domain\School.cs" />
     <Compile Include="Domain\Student.cs" />
     <Compile Include="ExprTests\TestExprs.cs" />
