@@ -6,7 +6,6 @@ namespace Wivuu.DataSeed
 {
     #region State Machine
 
-    [Obsolete("StateContainer will be replaced with strictly typed compiled mappings")]
     public class StateContainer<T>
         where T : class, new()
     {
@@ -115,7 +114,6 @@ namespace Wivuu.DataSeed
 
     #region Fluent Interface
 
-    [Obsolete("FluentExtensions will be replaced with strictly typed compiled mappings")]
     public static class FluentExtensions
     {
         /// <summary>
@@ -151,7 +149,6 @@ namespace Wivuu.DataSeed
 
     #region Source Mapping Container
 
-    [Obsolete("SourceMap will be replaced with strictly typed compiled mappings")]
     public struct SourceMap
     {
         private Dictionary<string, object> SourceD { get; }

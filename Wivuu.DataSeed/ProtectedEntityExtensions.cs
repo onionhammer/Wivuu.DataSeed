@@ -102,8 +102,6 @@ namespace Wivuu.DataSeed
             var prop = Entry.Property(change);
 
             prop.CurrentValue = value;
-            prop.IsModified   = true;
-
             return this;
         }
     }
