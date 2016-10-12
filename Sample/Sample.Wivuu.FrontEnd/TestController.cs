@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sample.Wivuu.Business;
-using Sample.Wivuu.Business.ViewModels;
 using Sample.Wivuu.Domain.Models;
+using Sample.Wivuu.FrontEnd.ViewModels;
 using Wivuu.DataSeed;
 
 namespace Sample.Wivuu.FrontEnd

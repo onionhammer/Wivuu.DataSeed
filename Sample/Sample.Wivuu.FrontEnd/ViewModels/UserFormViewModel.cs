@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sample.Wivuu.Business.ViewModels
+namespace Sample.Wivuu.FrontEnd.ViewModels
 {
     public class UserFormViewModel
     {

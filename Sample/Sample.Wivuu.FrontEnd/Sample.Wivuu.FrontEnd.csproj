@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="TestController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\UserFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Wivuu.DataSeed\Wivuu.DataSeed.csproj">
