@@ -14,13 +14,13 @@ namespace Wivuu.DataSeed.Tests.Domain
 
         public int Age { get; protected set; }
 
+        protected ProtectedEntity() { }
+
         public ProtectedEntity(int id, string name = "", int age = 0)
         {
             this.Id   = id;
             this.Name = name;
             this.Age  = age;
         }
-
-        internal ProtectedEntity() { }
     }
 }

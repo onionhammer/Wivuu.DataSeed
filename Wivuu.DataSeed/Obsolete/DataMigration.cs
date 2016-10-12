@@ -8,6 +8,7 @@ using System.Reflection;
 
 namespace Wivuu.DataSeed
 {
+    [Obsolete("Deprecated - Inherit from 'Wivuu.DataSeed.Seed'")]
     public abstract class DataMigration<T>
         where T : DbContext
     {

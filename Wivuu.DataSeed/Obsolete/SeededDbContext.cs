@@ -1,10 +1,12 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 
 namespace Wivuu.DataSeed
 {
+    [Obsolete("Use new BaseMigration class for your migrations")]
     public class SeededDbContext : DbContext
     {
         #region Properties

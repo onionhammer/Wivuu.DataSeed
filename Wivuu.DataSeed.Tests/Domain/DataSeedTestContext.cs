@@ -1,6 +1,7 @@
-﻿using System.Data.Common;
+﻿#pragma warning disable 612, 618
+
+using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
 
 namespace Wivuu.DataSeed.Tests.Domain
 {

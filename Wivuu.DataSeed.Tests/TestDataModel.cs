@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿#pragma warning disable 612, 618
+
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Wivuu.DataSeed.Tests.Domain;

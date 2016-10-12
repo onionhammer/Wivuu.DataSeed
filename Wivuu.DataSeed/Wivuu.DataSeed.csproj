@@ -67,17 +67,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMigration.cs" />
-    <Compile Include="DataMigrationHistory.cs" />
-    <Compile Include="FluentExtensions.cs" />
+    <Compile Include="Seed.cs" />
+    <Compile Include="Obsolete\DataMigration.cs" />
+    <Compile Include="Obsolete\DataMigrationHistory.cs" />
+    <Compile Include="Obsolete\FluentExtensions.cs" />
     <Compile Include="ProtectedEntityExtensions.cs" />
     <Compile Include="DbViewExtensions.cs" />
-    <Compile Include="Mapping.cs" />
+    <Compile Include="Obsolete\Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
-    <Compile Include="SeededDbContext.cs" />
+    <Compile Include="Obsolete\SeededDbContext.cs" />
     <Compile Include="SeedManagerExtensions.cs" />
-    <Compile Include="StructTuple.cs" />
+    <Compile Include="Obsolete\StructTuple.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

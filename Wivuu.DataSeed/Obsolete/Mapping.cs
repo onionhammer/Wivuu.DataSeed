@@ -7,6 +7,7 @@ using Wivuu.ExprUtils;
 
 namespace Wivuu.DataSeed
 {
+    [Obsolete("Deprecated -- Use AddOrUpdate")]
     public static class Mapping
     {
         private static Dictionary<StructTuple<Type, bool>, object> _selfMappers

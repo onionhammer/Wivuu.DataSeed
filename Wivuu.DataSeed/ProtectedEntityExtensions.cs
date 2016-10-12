@@ -56,9 +56,6 @@ namespace System.Data.Entity
 
             switch (entry.State)
             {
-                case EntityState.Detached:
-                    return db;
-
                 case EntityState.Added:
                     entry.State = EntityState.Detached;
                     return db;
@@ -99,9 +96,7 @@ namespace Wivuu.DataSeed
         /// </summary>
         public UpdateSet<T> Set<K>(Expression<Func<T, K>> change, K value)
         {
-            var prop = Entry.Property(change);
-
-            prop.CurrentValue = value;
+            Entry.Property(change).CurrentValue = value;
             return this;
         }
     }

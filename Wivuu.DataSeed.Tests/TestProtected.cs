@@ -63,6 +63,20 @@ namespace Wivuu.DataSeed.Tests
                 Assert.AreEqual(extEnt.Age, 15);
                 await db.SaveChangesAsync();
             }
+
+            using (var db = new DataSeedTestContext(Db.Database.Connection))
+            {
+                db.Database.UseTransaction(Db.Database.CurrentTransaction.UnderlyingTransaction);
+
+                // Delete entity
+                db.Remove(extEnt);
+                await db.SaveChangesAsync();
+
+                extEnt = await ProtectedEntities
+                    .FirstOrDefaultAsync(p => p.Name == "Craig");
+
+                Assert.IsNull(extEnt);
+            }
         }
 
         [TestMethod]

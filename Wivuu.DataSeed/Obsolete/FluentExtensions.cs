@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable 612, 618
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
@@ -6,6 +8,7 @@ namespace Wivuu.DataSeed
 {
     #region State Machine
 
+    [Obsolete("Deprecated -- Use AddOrUpdate")]
     public class StateContainer<T>
         where T : class, new()
     {
@@ -114,6 +117,7 @@ namespace Wivuu.DataSeed
 
     #region Fluent Interface
 
+    [Obsolete("Deprecated -- Use AddOrUpdate")]
     public static class FluentExtensions
     {
         /// <summary>
@@ -149,6 +153,7 @@ namespace Wivuu.DataSeed
 
     #region Source Mapping Container
 
+    [Obsolete("Deprecated -- Use AddOrUpdate")]
     public struct SourceMap
     {
         private Dictionary<string, object> SourceD { get; }
