@@ -39,7 +39,7 @@ namespace Sample.Wivuu.Business
         /// <summary>
         /// Submit a new form
         /// </summary>
-        public async Task<bool> UpdateForm(UserForm form)
+        public bool UpdateForm(UserForm form)
         {
             if (form == null)
                 throw new ArgumentNullException($"{nameof(form)} cannot be null");
@@ -54,9 +54,19 @@ namespace Sample.Wivuu.Business
             db.UpdateSet(form)
               .Set(i => i.Email, form.Email)
               .Set(i => i.DateOfBirth, form.DateOfBirth);
-
-            await db.SaveChangesAsync();
             return true;
+        }
+
+        /// <summary>
+        /// Sets the input id as active
+        /// </summary>
+        public async Task SetActive(Guid id, bool active)
+        {
+            var db   = Context.Db;
+            var form = await db.UserForms.FindAsync(id);
+
+            db.UpdateSet(form)
+              .Set(i => i.IsActive, active);
         }
 
         /// <summary>

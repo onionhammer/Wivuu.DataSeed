@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Sample.Wivuu.Domain;
 
 namespace Sample.Wivuu.Business
@@ -14,6 +15,8 @@ namespace Sample.Wivuu.Business
             Db        = new MyDbContext();
             UserForms = new UserFormRepository(this);
         }
+
+        public Task Save() => Db.SaveChangesAsync();
 
         public void Dispose()
         {

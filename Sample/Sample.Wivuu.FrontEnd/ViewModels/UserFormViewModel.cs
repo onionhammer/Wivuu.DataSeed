@@ -22,5 +22,7 @@ namespace Sample.Wivuu.FrontEnd.ViewModels
         public string Email { get; set; }
 
         public decimal? NetYearlyIncome { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
