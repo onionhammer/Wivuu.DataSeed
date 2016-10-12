@@ -64,5 +64,8 @@ DataSeed will automatically be looped in when you invoke `update-database`. The
 input Seed classes are run in-order, inside a transaction. If any of the seeds failed,
 the transaction is rolled back.
 
+## More information
+You can find additional information on my blog [here](https://www.eoleary.me/Blog/Seed-Your-Data)
+
 ## Future
 - Further documentation is coming to address usage of 'DbViews'.
