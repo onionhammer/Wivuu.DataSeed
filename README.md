@@ -26,7 +26,7 @@ public class AddClassesSample : Seed<MyDbContext>
 		context.Classes.Any() == false;
     
 	// Apply the seed
-    protected override void Apply(MyDbContext context)
+    public override void Apply(MyDbContext context)
     {
         // Add classes
         context.Classes.Add(new Class
