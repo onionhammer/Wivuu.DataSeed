@@ -10,15 +10,15 @@ namespace Sample.Wivuu.Business
 {
     public class UserFormRepository
     {
-        private BusinessContext Context { get; }
+        protected BusinessContext Context { get; }
 
-        private DbView<MyDbContext, UserForm> ActiveForms { get; }
+        protected DbView<MyDbContext, UserForm> ActiveForms { get; }
 
         internal UserFormRepository(BusinessContext context)
         {
             this.Context = context;
 
-            var db      = this.Context.Db;
+            var db      = Context.Db;
             var builder = db.ViewBuilder();
 
             // Build views
@@ -48,7 +48,7 @@ namespace Sample.Wivuu.Business
             if (form.Id == Guid.Empty) return false;
             if (form.DateOfBirth < new DateTime(1900, 1, 1)) return false;
 
-            var db = this.Context.Db;
+            var db = Context.Db;
 
             // Only save changes to email & date of birth
             db.UpdateSet(form)
@@ -63,6 +63,6 @@ namespace Sample.Wivuu.Business
         /// Find form by id
         /// </summary>
         public async Task<UserForm> Find(Guid id) => 
-            await  this.ActiveForms.FirstOrDefaultAsync(f => f.Id == id);
+            await ActiveForms.FirstOrDefaultAsync(f => f.Id == id);
     }
 }

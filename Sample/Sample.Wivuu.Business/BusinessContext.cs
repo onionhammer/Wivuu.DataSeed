@@ -17,6 +17,7 @@ namespace Sample.Wivuu.Business
 
         public void Dispose()
         {
+            Db.Dispose();
             GC.SuppressFinalize(this);
         }
     }

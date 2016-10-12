@@ -21,8 +21,10 @@ namespace Sample.Wivuu.FrontEnd
                 cfg.CreateMap<UserFormViewModel, UserForm>();
             });
 
-        public async Task<List<UserFormViewModel>> FakeGetUserForms(
-            DateTime since)
+        IMapper Mapper { get; } = 
+            Map.CreateMapper();
+
+        public async Task<List<UserFormViewModel>> FakeGetUserForms(DateTime since)
         {
             using (var business = new BusinessContext())
             {
@@ -37,11 +39,8 @@ namespace Sample.Wivuu.FrontEnd
         {
             using (var business = new BusinessContext())
             {
-                var form = await business.UserForms.Find(model.Id);
-
                 // Update form
-                var mapper = Map.CreateMapper();
-                mapper.Map(model, form);
+                var form = Mapper.Map(model, await business.UserForms.Find(model.Id));
 
                 await business.UserForms.UpdateForm(form);
             }
@@ -54,8 +53,8 @@ namespace Sample.Wivuu.FrontEnd
         [TestMethod]
         public async Task TestFakeController()
         {
-            var rand     = new Random();
-            var newEmail = $"{rand.NextString(4, 8)}@test2.com";
+            var rand      = new Random();
+            var newEmail  = $"{rand.NextString(4, 8)}@test2.com";
             var newIncome = rand.Next(5000, 10000);
 
             var controller = new FakeController();
