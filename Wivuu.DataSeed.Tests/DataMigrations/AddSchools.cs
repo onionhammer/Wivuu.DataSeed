@@ -27,8 +27,6 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
                 FirstName = "Jamie",
                 LastName  = "Johnson"
             });
-
-            db.SaveChanges();
         }
     }
 }
