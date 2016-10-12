@@ -96,7 +96,9 @@ namespace Wivuu.DataSeed
         /// </summary>
         public UpdateSet<T> Set<K>(Expression<Func<T, K>> change, K value)
         {
-            Entry.Property(change).CurrentValue = value;
+            var entry          = Entry.Property(change);
+            entry.CurrentValue = value;
+            entry.IsModified   = true;
             return this;
         }
     }
