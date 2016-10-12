@@ -1,4 +1,4 @@
-# Update 1.0.11
+# Update 1.0.12
 - Updated seed mechanism, DbContext no longer needs to extend SeededDbContext, which has been deprecated. 
 - 'View' creation system for creating queries of readonly objects
 
