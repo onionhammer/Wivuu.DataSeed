@@ -65,7 +65,8 @@ namespace Wivuu.DataSeed
         internal DbViewBuilder(K db)
         {
             // Views should not be updatable - do not track changes
-            db.Configuration.ProxyCreationEnabled = false;
+            db.Configuration.ProxyCreationEnabled     = false;
+            db.Configuration.AutoDetectChangesEnabled = false;
 
             this.Db = db;
         }
