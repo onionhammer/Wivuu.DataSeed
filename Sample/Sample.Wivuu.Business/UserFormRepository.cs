@@ -54,6 +54,7 @@ namespace Sample.Wivuu.Business
             db.UpdateSet(form)
               .Set(i => i.Email, form.Email)
               .Set(i => i.DateOfBirth, form.DateOfBirth);
+
             return true;
         }
 
