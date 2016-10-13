@@ -28,11 +28,8 @@ namespace System.Data.Entity
         /// Create a new entity of the specified type
         /// </summary>
         public static UpdateSet<T> New<T>(this DbContext db)
-            where T : class
-        {
-            var entity = db.Set<T>().Create();
-            return new UpdateSet<T>(db, entity);
-        }
+            where T : class =>
+            new UpdateSet<T>(db, db.Set<T>().Create());
 
         /// <summary>
         /// Create a new entity of the specified type
@@ -40,8 +37,7 @@ namespace System.Data.Entity
         public static T New<T>(this DbContext db, T entity)
             where T : class
         {
-            var entry   = db.Entry(entity);
-            entry.State = EntityState.Added;
+            db.Entry(entity).State = EntityState.Added;
 
             return entity;
         }
