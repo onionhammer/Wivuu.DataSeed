@@ -51,9 +51,9 @@ namespace Sample.Wivuu.Business
             var db = Context.Db;
 
             // Only save changes to email & date of birth
-            db.UpdateSet(form)
-              .Set(i => i.Email, form.Email)
-              .Set(i => i.DateOfBirth, form.DateOfBirth);
+            db.UpdateProps(form, 
+                nameof(form.Email), 
+                nameof(form.DateOfBirth));
 
             return true;
         }

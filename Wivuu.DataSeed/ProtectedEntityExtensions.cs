@@ -9,6 +9,22 @@ namespace System.Data.Entity
     public static class DbEntityExtensions
     {
         /// <summary>
+        /// Mark the input properties as modified
+        /// </summary>
+        public static UpdateSet<T> UpdateProps<T>(this DbContext db,
+            T entity, params string[] properties)
+            where T : class
+        {
+            var result = new UpdateSet<T>(db, entity);
+            var entry  = result.Entry;
+
+            for (var i = 0; i < properties.Length; ++i)
+                entry.Property(properties[i]).IsModified = true;
+
+            return result;
+        }
+
+        /// <summary>
         /// Create an UpdateSet to change one or more properties 
         /// of the input entity
         /// </summary>
@@ -70,12 +86,8 @@ namespace Wivuu.DataSeed
         where T : class
     {
         private readonly DbContext Db;
-        private readonly DbEntityEntry<T> Entry;
 
-        /// <summary>
-        /// Retrieve underlying entity
-        /// </summary>
-        public DbEntityEntry<T> Entity => Entry;
+        public DbEntityEntry<T> Entry { get; }
 
         internal UpdateSet(DbContext db, T entity)
         {
