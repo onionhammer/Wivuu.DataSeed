@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using Sample.Wivuu.Domain;
@@ -41,8 +42,7 @@ namespace Sample.Wivuu.Business
         /// </summary>
         public bool UpdateForm(UserForm form)
         {
-            if (form == null)
-                throw new ArgumentNullException($"{nameof(form)} cannot be null");
+            Contract.Assert(form != null);
 
             // Validate input
             if (form.Id == Guid.Empty) return false;
