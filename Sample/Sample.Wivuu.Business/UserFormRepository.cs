@@ -45,8 +45,8 @@ namespace Sample.Wivuu.Business
             Contract.Assert(form != null);
 
             // Validate input
-            if (form.Id == Guid.Empty) return false;
-            if (form.DateOfBirth < new DateTime(1900, 1, 1)) return false;
+            if (form.DateOfBirth < new DateTime(1900, 1, 1))
+                return false;
 
             var db = Context.Db;
 
