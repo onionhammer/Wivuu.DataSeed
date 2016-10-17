@@ -8,12 +8,12 @@ namespace Sample.Wivuu.Business
     {
         internal MyDbContext Db { get; }
 
-        public UserFormRepository UserForms { get; }
+        public UserFormService UserForms { get; }
 
         public BusinessContext()
         {
             Db        = new MyDbContext();
-            UserForms = new UserFormRepository(this);
+            UserForms = new UserFormService(this);
         }
 
         public Task Save() => Db.SaveChangesAsync();

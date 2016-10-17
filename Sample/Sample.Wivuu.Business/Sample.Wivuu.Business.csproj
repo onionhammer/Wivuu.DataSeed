@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="BusinessContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserFormRepository.cs" />
+    <Compile Include="UserFormService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sample.Wivuu.Domain\Sample.Wivuu.Domain.csproj">

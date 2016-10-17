@@ -9,13 +9,13 @@ using Wivuu.DataSeed;
 
 namespace Sample.Wivuu.Business
 {
-    public class UserFormRepository
+    public class UserFormService
     {
         protected BusinessContext Context { get; }
 
         protected DbView<MyDbContext, UserForm> ActiveForms { get; }
 
-        internal UserFormRepository(BusinessContext context)
+        internal UserFormService(BusinessContext context)
         {
             this.Context = context;
 
