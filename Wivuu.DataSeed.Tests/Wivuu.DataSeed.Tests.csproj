@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wivuu.DataSeed.Tests</RootNamespace>
     <AssemblyName>Wivuu.DataSeed.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -115,10 +115,6 @@
     <ProjectReference Include="..\Wivuu.DataSeed\Wivuu.DataSeed.csproj">
       <Project>{b00a2203-7ade-4915-9bd9-5cf79e894d44}</Project>
       <Name>Wivuu.DataSeed</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wivuu.Expr\Wivuu.Expr.csproj">
-      <Project>{3e6aeabb-6c61-483d-868c-a24d8e3c6683}</Project>
-      <Name>Wivuu.Expr</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

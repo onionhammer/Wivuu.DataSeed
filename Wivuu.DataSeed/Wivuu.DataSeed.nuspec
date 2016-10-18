@@ -16,7 +16,4 @@
     <copyright>Copyright 2015</copyright>
     <tags>EntityFramework data model</tags>
   </metadata>
-  <files>
-    <file src="bin\Debug\Wivuu.Expr.dll" target="lib\net46" />
-  </files>
 </package>

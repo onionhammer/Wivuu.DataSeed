@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wivuu.DataSeed</RootNamespace>
     <AssemblyName>Wivuu.DataSeed</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -67,6 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Obsolete\Expr.cs" />
+    <Compile Include="Obsolete\ILSerializer.cs" />
+    <Compile Include="Obsolete\Scope.cs" />
     <Compile Include="Seed.cs" />
     <Compile Include="Obsolete\DataMigration.cs" />
     <Compile Include="Obsolete\DataMigrationHistory.cs" />
@@ -82,17 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Packaging\NuGet.targets">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
     <None Include="Wivuu.DataSeed.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Wivuu.Expr\Wivuu.Expr.csproj">
-      <Project>{3e6aeabb-6c61-483d-868c-a24d8e3c6683}</Project>
-      <Name>Wivuu.Expr</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
