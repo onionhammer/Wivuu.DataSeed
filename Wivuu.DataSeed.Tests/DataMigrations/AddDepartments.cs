@@ -17,7 +17,7 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
         {
             var random        = new Random(0x3);
             var school        = db.Schools.First();
-            var scienceDeptId = random.NextGuid();
+            var scienceDeptId = "science".ToGuid();
 
             db.Departments.Find(scienceDeptId)
                 .Update(new Dictionary<string, object>

@@ -12,7 +12,7 @@ namespace Sample.Wivuu.Domain.Migrations.Data
 
             context.UserForms.AddOrUpdate(new Models.UserForm
             {
-                Id                   = rand.NextGuid(),
+                Id                   = "SampleForm".ToGuid(),
                 FirstName            = rand.NextString(4, 8),
                 LastName             = rand.NextString(4, 8),
                 DateOfBirth          = rand.NextDateTime(),

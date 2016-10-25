@@ -18,8 +18,8 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             var random      = new Random(0x1);
             var scienceDept = db.Departments.Single(d => d.Name == "Science");
 
-            var biologyId = random.NextGuid();
-            var physicsId = random.NextGuid();
+            var biologyId = "biology".ToGuid();
+            var physicsId = "physics".ToGuid();
 
             // Add classes
             db.Classes.Find(biologyId)

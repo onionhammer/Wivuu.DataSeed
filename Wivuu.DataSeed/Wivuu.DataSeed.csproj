@@ -82,6 +82,7 @@
     <Compile Include="Obsolete\SeededDbContext.cs" />
     <Compile Include="SeedManagerExtensions.cs" />
     <Compile Include="Obsolete\StructTuple.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

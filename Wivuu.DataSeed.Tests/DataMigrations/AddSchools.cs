@@ -16,14 +16,14 @@ namespace Wivuu.DataSeed.Tests.DataMigrations
             // Add "Summer Heights High" school
             var school = db.Schools.Add(new School
             {
-                Id   = random.NextGuid(),
+                Id   = "summerheightshigh".ToGuid(),
                 Name = "Summer Heights High"
             });
 
             // Add students
             school.Students.Add(new Student
             {
-                Id        = random.NextGuid(),
+                Id        = "jamie.johnson".ToGuid(),
                 FirstName = "Jamie",
                 LastName  = "Johnson"
             });
