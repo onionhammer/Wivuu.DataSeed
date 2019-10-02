@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Wivuu.ExprUtils;
 
 namespace Wivuu.DataSeed
 {
     [Obsolete("Deprecated -- Use AddOrUpdate")]
     public static class Mapping
     {
-        private static Dictionary<StructTuple<Type, bool>, object> _selfMappers
-            = new Dictionary<StructTuple<Type, bool>, object>();
+        private static Dictionary<ValueTuple<Type, bool>, object> _selfMappers
+            = new Dictionary<ValueTuple<Type, bool>, object>();
 
         private static Dictionary<Type, object> _dictMappers
             = new Dictionary<Type, object>();
@@ -27,7 +26,7 @@ namespace Wivuu.DataSeed
             if (destination == null)
                 destination = new T();
 
-            var key = StructTuple.Create(type, mapAll);
+            var key = ValueTuple.Create(type, mapAll);
 
             object mappingBox;
             Action<T, T> mapping;
@@ -55,7 +54,7 @@ namespace Wivuu.DataSeed
             if (destination == null)
                 destination = new T();
 
-            var key = StructTuple.Create(type, true);
+            var key = ValueTuple.Create(type, true);
 
             object mappingBox;
             Action<T, object> mapping;
@@ -141,10 +140,7 @@ namespace Wivuu.DataSeed
                 body, destination, source
             );
 
-            if (owner.IsVisible)
-                return ILSerializer.Compile(action);
-            else
-                return action.Compile();
+            return action.Compile();
         }
 
         private static Action<T, T> CreateMap<T>(T value, bool mapAll)
@@ -201,10 +197,7 @@ namespace Wivuu.DataSeed
                 body, destination, source
             );
 
-            if (owner.IsValueType)
-                return ILSerializer.Compile(action);
-            else
-                return action.Compile();
+            return action.Compile();
         }
 
         private static Action<T, K> CreateMap<T, K>(T destValue, K sourceValue)
@@ -257,10 +250,7 @@ namespace Wivuu.DataSeed
                 body, destination, source
             );
 
-            if (destType.IsValueType && sourceType.IsVisible)
-                return ILSerializer.Compile(action);
-            else
-                return action.Compile();
+            return action.Compile();
         }
 
         private static bool ShouldCopy(Type t)

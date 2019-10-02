@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wivuu.DataSeed", "Wivuu.DataSeed\Wivuu.DataSeed.csproj", "{B00A2203-7ADE-4915-9BD9-5CF79E894D44}"
 EndProject
@@ -31,8 +31,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Packaging|Any CPU.ActiveCfg = Packaging|Any CPU
-		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Packaging|Any CPU.Build.0 = Packaging|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Packaging|Any CPU.ActiveCfg = Release|Any CPU
+		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Packaging|Any CPU.Build.0 = Release|Any CPU
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B00A2203-7ADE-4915-9BD9-5CF79E894D44}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1971061F-199D-4559-93B2-FC36A3036DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -67,5 +67,8 @@ Global
 		{E8FA9C2D-AB60-4248-90E8-B7FF186CF29D} = {71F48382-9CAE-4975-9689-CD9CFF0EBF13}
 		{41A06C57-B60D-4A40-B0B9-7892D82441FF} = {71F48382-9CAE-4975-9689-CD9CFF0EBF13}
 		{6F1C26B1-4589-4D87-8572-C9C893BC520B} = {71F48382-9CAE-4975-9689-CD9CFF0EBF13}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B1972C4-B506-477B-8BB5-CB9812F3C81F}
 	EndGlobalSection
 EndGlobal
